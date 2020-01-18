@@ -10,6 +10,7 @@
 
 import UIKit
 
+
 enum RestorationIdentifierTextField {
     case password
     case login
@@ -39,13 +40,25 @@ class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
     var passwordText: String = ""
     var hightCorrectFokusKeyb: CGFloat = 0
     var keyboadHeight: CGFloat = 0
+    let charHidePassword: Character = "●"
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        switchOffLoginButton()
+        // MARK: navbar config
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.backgroundColor = UIColor.clear
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         
+        // MARK: init TextField
+        loginTextFild.layer.borderColor = UIColor.red.cgColor
+        passwordTextFild.layer.borderColor = UIColor.red.cgColor
+        passwordTextFild.layer.borderWidth = 0
+        passwordTextFild.layer.borderWidth = 0
+        loginButton.isEnabled = false
+        loginButton.alpha = 0.5
         registerForKeyboardNotifications()
         passwordTextFild.delegate = self
         loginTextFild.delegate = self
@@ -53,20 +66,26 @@ class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
         loginTextFild.restorationIdentifier = RestorationIdentifierTextField.login.string
     }
     
+    // MARK: - finish edit TextField
     @IBAction func editingDidEndTextField(_ sender: UITextField) {
         sender.resignFirstResponder()
     }
     
+    // MARK: - change TextField Login
     @IBAction func changedLoginTextField(_ sender: UITextField) {
         guard let login = sender.text else { return }
-        presenter?.checkLogin(login: login)
+        sender.layer.borderWidth = 0
+        if (presenter?.checkLogin(login: login) == false) {
+            switchOffLoginButton(sender)
+        }
     }
     
+    // MARK: -  change textField password
     @IBAction func changedPasswordTextField(_ sender: UITextField) {
         guard let password = sender.text else { return }
         guard password.count > 0 else { return }
         guard let lastChar = password.last else { return }
-        if (lastChar == "●" || passwordText.count != password.count - 1) {
+        if (lastChar == charHidePassword || passwordText.count != password.count - 1) {
             passwordText.removeAll()
             sender.text = ""
         }
@@ -74,31 +93,45 @@ class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
             passwordText.append(lastChar)
             var passwordShow = password
             passwordShow.removeLast()
-            passwordShow.append("●")
+            passwordShow.append(charHidePassword)
             sender.text = passwordShow
         }
-        presenter?.checkPassword(password: passwordText)
+        sender.layer.borderWidth = 0
+        if (presenter?.checkPassword(password: passwordText) == false) {
+            switchOffLoginButton(sender)
+        }
+        
     }
-    
+    // MARK: - click login Button
     @IBAction func clickLoginButton(_ sender: UIButton) {
         loginTextFild.resignFirstResponder()
         passwordTextFild.resignFirstResponder()
+        
+        presenter?.clickLogin()
     }
     
+    // MARK: -  click link Button
     @IBAction func clickLinkButton(_ sender: UIButton) {
+        presenter?.openLink()
     }
     
-    func switchOffLoginButton() {
+    
+    // MARK: - error login or password
+    func switchOffLoginButton(_ sender: UITextField) {
         DispatchQueue.main.async {
             self.loginButton.isEnabled = false
             self.loginButton.alpha = 0.5
+            sender.layer.borderWidth = 3
         }
     }
     
+    // MARK: - correct login and password
     func switchOnLoginButton() {
         DispatchQueue.main.async {
             self.loginButton.isEnabled = true
             self.loginButton.alpha = 1
+            self.loginTextFild.layer.borderWidth = 0
+            self.passwordTextFild.layer.borderWidth = 0
         }
     }
 
@@ -109,7 +142,10 @@ class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
 
 extension LoginScreenViewController: UITextFieldDelegate {
     
+    // MARK: - correct fokus textField (before begin edit)
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        self.passwordTextFild.layer.borderWidth = 0
+        self.passwordTextFild.layer.borderWidth = 0
         if (textField.restorationIdentifier == RestorationIdentifierTextField.password.string) {
             hightCorrectFokusKeyb = textField.frame.size.height
         }
@@ -122,6 +158,7 @@ extension LoginScreenViewController: UITextFieldDelegate {
         return true
     }
     
+    // MARK: -  clouse keyboard
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if (textField.restorationIdentifier == RestorationIdentifierTextField.password.string) {
             changedPasswordTextField(textField)
@@ -134,16 +171,17 @@ extension LoginScreenViewController: UITextFieldDelegate {
         return true
     }
     
+    // MARK: - notification keyboad
     func registerForKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
     func removeForKeyboardNotifications() {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    // MARK: - open keyboard
     @objc func keyboardWillShow(_ notification: Notification) {
         guard let userinfo = notification.userInfo else {return}
         guard let keyboadSize = (userinfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
@@ -152,11 +190,13 @@ extension LoginScreenViewController: UITextFieldDelegate {
         changeKeyboardContainerViewHeightConstrain(keyboardHeight: keyboadHeight)
     }
     
+    // MARK: - clouse keyboard
     @objc func keyboardWillHide() {
         keyboadHeight = 0
         changeKeyboardContainerViewHeightConstrain(keyboardHeight: keyboadHeight)
     }
     
+    // MARK: - change fokus textFilde
     func changeKeyboardContainerViewHeightConstrain(keyboardHeight: CGFloat) {
         DispatchQueue.main.async {
             if (keyboardHeight > 0) {
