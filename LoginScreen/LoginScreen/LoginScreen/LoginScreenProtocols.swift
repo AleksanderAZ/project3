@@ -12,12 +12,15 @@ import Foundation
 
 //MARK: Wireframe -
 protocol LoginScreenWireframeProtocol: class {
-
+    func login(login: String, password: String)
+    func openLink()
 }
 //MARK: Presenter -
 protocol LoginScreenPresenterProtocol: class {
-    func checkPassword(password: String)
-    func checkLogin(login: String)
+    func checkPassword(password: String) -> Bool
+    func checkLogin(login: String) -> Bool
+    func clickLogin()
+    func openLink()
 }
 
 //MARK: Interactor -
@@ -31,6 +34,5 @@ protocol LoginScreenViewProtocol: class {
     
     var presenter: LoginScreenPresenterProtocol?  { get set }
     
-    func switchOffLoginButton()
     func switchOnLoginButton()
 }

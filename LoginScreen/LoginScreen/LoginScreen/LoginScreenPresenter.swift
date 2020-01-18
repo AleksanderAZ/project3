@@ -15,77 +15,74 @@ class LoginScreenPresenter: LoginScreenPresenterProtocol {
     weak private var view: LoginScreenViewProtocol?
     var interactor: LoginScreenInteractorProtocol?
     private let router: LoginScreenWireframeProtocol
-
-    var flagChechLogin: Bool
-    var flagChechPassword: Bool
+    
+    let loginScreenModel = LoginScreenModel()
     
     init(interface: LoginScreenViewProtocol, interactor: LoginScreenInteractorProtocol?, router: LoginScreenWireframeProtocol) {
         self.view = interface
         self.interactor = interactor
         self.router = router
-        
-        flagChechLogin = false
-        flagChechPassword = false
     }
 
-    func checkLogin(login: String) {
-        flagChechLogin = false
-        let count = login.count
-
-        guard (count > 4 && count < 26 ) else {
-            view?.switchOffLoginButton()
-            return
+    // MARK: previous common check login and password
+    func checkAll(str: String, maxCount: Int)->Bool {
+        let count = str.count
+        
+        guard (count >= 5 && count <= maxCount) else {
+            return false
+        }
+        
+        for char in RequestsDataAPI.restrict_characters {
+            if str.contains(char) {
+                return false
+            }
+        }
+        
+        return true
+    }
+    // MARK: check login
+    func checkLogin(login: String)->Bool {
+        loginScreenModel.flagChechLogin = false
+        loginScreenModel.login = ""
+        guard checkAll(str: login, maxCount: 25) else {
+            return false
         }
         
         guard login.contains("@") else {
-            view?.switchOffLoginButton()
-            return
-        }
-        
-        let special_characters = " \"'()+,-/:;<=>?[\\]_`{|}~"
-        for char in special_characters {
-            if login.contains(char) {
-                view?.switchOffLoginButton()
-                return
-            }
+            return false
         }
         
         var loginChar = Array(login)
         var index = loginChar.lastIndex(of: ".")
         guard index != nil else {
-            view?.switchOffLoginButton()
-            return
+            return false
         }
         
         while (index != nil) {
             guard (index! < loginChar.count - 2) else {
-                view?.switchOffLoginButton()
-                return
+                return false
             }
             loginChar.removeLast(loginChar.count-index!)
             index = loginChar.lastIndex(of: ".")
         }
         
-        flagChechLogin = true
+        loginScreenModel.flagChechLogin = true
         checkLoginButton()
+        loginScreenModel.login = login
+        return true
     }
     
-    func checkPassword(password: String) {
+    // MARK:  check  password
+    func checkPassword(password: String)-> Bool {
         
-        flagChechPassword = false
-        let count = password.count
-        guard (count > 4 && count < 21 ) else {
-            view?.switchOffLoginButton()
-            return
+        loginScreenModel.flagChechPassword = false
+        loginScreenModel.password = ""
+        
+        guard checkAll(str: password, maxCount: 20) else {
+            return false
         }
         
-        let numbers = "0123456789"
-        let lower_case = "abcdefghijklmnopqrstuvwxyz"
-        let upper_case = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        let special_characters = "!@#$%^&*()-+"
-        let checkingStrings = [numbers, lower_case, upper_case, special_characters]
-        
-        for check in checkingStrings {
+        for check in RequestsDataAPI.checkingStrings {
             var checkFlag = false
             for char in check {
                 if password.contains(char) {
@@ -94,18 +91,29 @@ class LoginScreenPresenter: LoginScreenPresenterProtocol {
                 }
             }
             guard (checkFlag) else {
-                view?.switchOffLoginButton()
-                return
+                return false
             }
         }
         
-        flagChechPassword = true
+        loginScreenModel.flagChechPassword = true
         checkLoginButton()
+        loginScreenModel.password = password
+        return true
     }
     
+    // MARK:  finaly check passwor and login
     func checkLoginButton() {
-        if (flagChechLogin && flagChechPassword) {
+        if (loginScreenModel.flagChechLogin && loginScreenModel.flagChechPassword) {
             view?.switchOnLoginButton()
         }
+    }
+    
+    func clickLogin() {
+        router.login(login: loginScreenModel.login, password: loginScreenModel.password)
+    }
+    
+
+    func openLink() {
+        router.openLink()
     }
 }

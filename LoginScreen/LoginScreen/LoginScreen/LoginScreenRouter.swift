@@ -15,7 +15,7 @@ class LoginScreenRouter: LoginScreenWireframeProtocol {
     weak var viewController: UIViewController?
     
     static func createModule(title: String) -> UIViewController {
-        // Change to get view from storyboard if not using progammatic UI
+        
         let view = LoginScreenViewController(nibName: nil, bundle: nil)
         let interactor = LoginScreenInteractor()
         let router = LoginScreenRouter()
@@ -28,5 +28,15 @@ class LoginScreenRouter: LoginScreenWireframeProtocol {
         view.navigationItem.title = title
         
         return view
+    }
+    
+    // MARK: - make login
+    func login(login: String, password: String) {
+        print(login, password)
+    }
+    
+    // MARK: - make link
+    func openLink() {
+        print("link")
     }
 }
