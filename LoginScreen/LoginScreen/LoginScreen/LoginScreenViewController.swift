@@ -10,11 +10,21 @@
 
 import UIKit
 
+enum RestorationIdentifierTextField {
+    case password
+    case login
+    
+    var string: String {
+        switch self {
+        case .password    : return "password"
+        case .login    : return "login"
+        }
+    }
+}
+
 class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
 
 	var presenter: LoginScreenPresenterProtocol?
-    let restorationIdentifierPassword = "password"
-    let restorationIdentifierLogin = "login"
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var containerLogoView: UIView!
     @IBOutlet weak var containerKeyboard: UIView!
@@ -27,19 +37,20 @@ class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
     @IBOutlet weak var linkButton: UIButton!
 
     var passwordText: String = ""
+    var hightCorrectFokusKeyb: CGFloat = 0
+    var keyboadHeight: CGFloat = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        switchOffLoginButton()
+        
         registerForKeyboardNotifications()
-        
-        self.loginButton.isEnabled = false
-        self.loginButton.alpha = 0.5
-        
-        loginTextFild.delegate = self
         passwordTextFild.delegate = self
-        passwordTextFild.restorationIdentifier = restorationIdentifierPassword
-        loginTextFild.restorationIdentifier = restorationIdentifierLogin
+        loginTextFild.delegate = self
+        passwordTextFild.restorationIdentifier = RestorationIdentifierTextField.password.string
+        loginTextFild.restorationIdentifier = RestorationIdentifierTextField.login.string
     }
     
     @IBAction func editingDidEndTextField(_ sender: UITextField) {
@@ -98,14 +109,27 @@ class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
 
 extension LoginScreenViewController: UITextFieldDelegate {
     
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        if (textField.restorationIdentifier == RestorationIdentifierTextField.password.string) {
+            hightCorrectFokusKeyb = textField.frame.size.height
+        }
+        else {
+            hightCorrectFokusKeyb = 0
+        }
+        if (keyboadHeight > 0) {
+            changeKeyboardContainerViewHeightConstrain(keyboardHeight: keyboadHeight)
+        }
+        return true
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        if (textField.restorationIdentifier == "password") {
+        if (textField.restorationIdentifier == RestorationIdentifierTextField.password.string) {
             changedPasswordTextField(textField)
         }
         else {
             changedLoginTextField(textField)
         }
+        
         textField.resignFirstResponder()
         return true
     }
@@ -123,10 +147,24 @@ extension LoginScreenViewController: UITextFieldDelegate {
     @objc func keyboardWillShow(_ notification: Notification) {
         guard let userinfo = notification.userInfo else {return}
         guard let keyboadSize = (userinfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
-        keyboardContainerViewHeightConstrain.constant = keyboadSize.height - linkStackView.frame.size.height - 8 + loginTextFild.frame.size.height
+        
+        keyboadHeight = keyboadSize.height
+        changeKeyboardContainerViewHeightConstrain(keyboardHeight: keyboadHeight)
     }
     
     @objc func keyboardWillHide() {
-        keyboardContainerViewHeightConstrain.constant = 0
+        keyboadHeight = 0
+        changeKeyboardContainerViewHeightConstrain(keyboardHeight: keyboadHeight)
+    }
+    
+    func changeKeyboardContainerViewHeightConstrain(keyboardHeight: CGFloat) {
+        DispatchQueue.main.async {
+            if (keyboardHeight > 0) {
+                self.keyboardContainerViewHeightConstrain.constant = keyboardHeight - self.linkStackView.frame.size.height + self.hightCorrectFokusKeyb
+            }
+            else {
+                self.keyboardContainerViewHeightConstrain.constant = 0
+            }
+        }
     }
 }

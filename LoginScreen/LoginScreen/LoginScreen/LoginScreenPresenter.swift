@@ -15,7 +15,7 @@ class LoginScreenPresenter: LoginScreenPresenterProtocol {
     weak private var view: LoginScreenViewProtocol?
     var interactor: LoginScreenInteractorProtocol?
     private let router: LoginScreenWireframeProtocol
-
+    
     var flagChechLogin: Bool
     var flagChechPassword: Bool
     
@@ -42,7 +42,7 @@ class LoginScreenPresenter: LoginScreenPresenterProtocol {
             return
         }
         
-        let special_characters = " \"'()+,-/:;<=>?[\\]_`{|}~"
+        let special_characters = " \"',/:;<=>?[\\]_`{|}~"
         for char in special_characters {
             if login.contains(char) {
                 view?.switchOffLoginButton()

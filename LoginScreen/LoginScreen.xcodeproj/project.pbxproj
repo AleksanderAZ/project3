@@ -17,6 +17,7 @@
 		A43C6B9723CF189600C188BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A43C6B9523CF189600C188BB /* Main.storyboard */; };
 		A43C6B9923CF189A00C188BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A43C6B9823CF189A00C188BB /* Assets.xcassets */; };
 		A43C6B9C23CF189A00C188BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A43C6B9A23CF189A00C188BB /* LaunchScreen.storyboard */; };
+		A4D50AAB23D30310007273BA /* LoginScreenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D50AAA23D30310007273BA /* LoginScreenModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		A43C6B9823CF189A00C188BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A43C6B9B23CF189A00C188BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A43C6B9D23CF189A00C188BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A4D50AAA23D30310007273BA /* LoginScreenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,11 +90,20 @@
 		A43C6B9023CF189600C188BB /* LoginScreen */ = {
 			isa = PBXGroup;
 			children = (
+				A4D50AA923D302F3007273BA /* Model */,
 				A4326CFE23D04DDC00035329 /* AppServise */,
 				A4326CF123D04D9300035329 /* LoginScreen */,
 				A43C6B9D23CF189A00C188BB /* Info.plist */,
 			);
 			path = LoginScreen;
+			sourceTree = "<group>";
+		};
+		A4D50AA923D302F3007273BA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A4D50AAA23D30310007273BA /* LoginScreenModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,6 +179,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4326CFB23D04DCE00035329 /* LoginScreenRouter.swift in Sources */,
+				A4D50AAB23D30310007273BA /* LoginScreenModel.swift in Sources */,
 				A4326CFC23D04DCE00035329 /* LoginScreenViewController.swift in Sources */,
 				A4326CFA23D04DCE00035329 /* LoginScreenProtocols.swift in Sources */,
 				A4326CF823D04DCE00035329 /* LoginScreenInteractor.swift in Sources */,
