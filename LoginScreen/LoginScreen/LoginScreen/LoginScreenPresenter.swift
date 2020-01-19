@@ -37,7 +37,6 @@ class LoginScreenPresenter: LoginScreenPresenterProtocol {
                 return false
             }
         }
-        
         return true
     }
     // MARK: check login
