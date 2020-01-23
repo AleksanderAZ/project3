@@ -16,103 +16,96 @@ class LoginScreenPresenter: LoginScreenPresenterProtocol {
     var interactor: LoginScreenInteractorProtocol?
     private let router: LoginScreenWireframeProtocol
     
-    let loginScreenModel = LoginScreenModel()
+    var passwordText: String = ""
+    let charHidePassword: Character = "●"
+    
+    var statusHidePassword: Bool = true
     
     init(interface: LoginScreenViewProtocol, interactor: LoginScreenInteractorProtocol?, router: LoginScreenWireframeProtocol) {
         self.view = interface
         self.interactor = interactor
         self.router = router
     }
-
-    // MARK: previous common check login and password
-    func checkAll(str: String, maxCount: Int)->Bool {
-        let count = str.count
-        
-        guard (count >= 5 && count <= maxCount) else {
-            return false
-        }
-        
-        for char in RequestsDataAPI.restrict_characters {
-            if str.contains(char) {
-                return false
-            }
-        }
-        
-        return true
-    }
-    // MARK: check login
-    func checkLogin(login: String)->Bool {
-        loginScreenModel.flagChechLogin = false
-        loginScreenModel.login = ""
-        guard checkAll(str: login, maxCount: 25) else {
-            return false
-        }
-        
-        guard login.contains("@") else {
-            return false
-        }
-        
-        var loginChar = Array(login)
-        var index = loginChar.lastIndex(of: ".")
-        guard index != nil else {
-            return false
-        }
-        
-        while (index != nil) {
-            guard (index! < loginChar.count - 2) else {
-                return false
-            }
-            loginChar.removeLast(loginChar.count-index!)
-            index = loginChar.lastIndex(of: ".")
-        }
-        
-        loginScreenModel.flagChechLogin = true
-        checkLoginButton()
-        loginScreenModel.login = login
-        return true
+    
+    func setLogin(login: String) {
+        interactor?.setLogin(login: login)
+        update()
     }
     
-    // MARK:  check  password
-    func checkPassword(password: String)-> Bool {
-        
-        loginScreenModel.flagChechPassword = false
-        loginScreenModel.password = ""
-        
-        guard checkAll(str: password, maxCount: 20) else {
-            return false
+    func setPassword(password: String) {
+        var passwordNew = password
+        if (isHidePassword()) {
+            let password = interactor?.getPassword() ?? ""
+            passwordNew = changeHidePassword(password: password, passwordHide: passwordNew)
         }
-        
-        for check in RequestsDataAPI.checkingStrings {
-            var checkFlag = false
-            for char in check {
-                if password.contains(char) {
-                    checkFlag = true
-                    break
-                }
-            }
-            guard (checkFlag) else {
-                return false
-            }
-        }
-        
-        loginScreenModel.flagChechPassword = true
-        checkLoginButton()
-        loginScreenModel.password = password
-        return true
+        interactor?.setPassword(password: password)
+        update()
     }
     
     // MARK:  finaly check passwor and login
-    func checkLoginButton() {
-        if (loginScreenModel.flagChechLogin && loginScreenModel.flagChechPassword) {
-            view?.switchOnLoginButton()
+    func update() {
+        guard let loginStatus = interactor?.getStatusLogin()  else { return }
+        guard loginStatus else { view?.switchOffPasswordTextFild(); return }
+        view?.switchOnPasswordTextFild()
+        guard let passwordStatus = interactor?.getStatusPassword()  else { return }
+        guard passwordStatus else { view?.switchOffLoginButton() ; return }
+        view?.switchOnLoginButton()
+    }
+    
+    func isHidePassword()-> Bool {
+        return statusHidePassword
+    }
+    
+    func changeHidePassword()->String {
+        statusHidePassword = !statusHidePassword
+        if (isHidePassword()) {
+            view?.setTittlePasswordButton(tittle: "🔓")
+            return String(repeating: charHidePassword, count: passwordText.count)
+        }
+        else {
+            view?.setTittlePasswordButton(tittle: "🔒")
+            return passwordText
+        }
+        
+    }
+    
+    func cleanPassword()->String {
+        passwordText.removeAll()
+        view?.switchOffLoginButton()
+        return ""
+    }
+    
+    func changeHidePassword(password: String, passwordHide: String)->String {
+        guard (passwordHide.count > 0) else { return ""}
+        guard (passwordHide.count >= password.count) else { return "" }
+        guard (passwordHide.count > password.count) else { return password }
+        guard let _ = passwordHide.lastIndex(where: {$0 != charHidePassword}) else { return "" }
+        var newPassword = ""
+        for char in passwordHide {
+            if (char == charHidePassword) {
+                newPassword.append(passwordText.removeFirst())
+            }
+            else {
+                newPassword.append(char)
+            }
+        }
+        return newPassword
+    }
+    
+    func getPasswordForShow()->String {
+        guard let password = interactor?.getPassword() else { return "" }
+        if (isHidePassword()) {
+            return String(repeating: charHidePassword, count: password.count)
+        }
+        else {
+            return password
         }
     }
     
     func clickLogin() {
-        router.login(login: loginScreenModel.login, password: loginScreenModel.password)
+        router.login(login: interactor?.getLogin() ?? "", password: interactor?.getPassword() ?? "")
     }
     
-
     func openLink() {
         router.openLink()
     }

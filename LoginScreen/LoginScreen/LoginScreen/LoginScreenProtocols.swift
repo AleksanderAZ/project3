@@ -17,8 +17,11 @@ protocol LoginScreenWireframeProtocol: class {
 }
 //MARK: Presenter -
 protocol LoginScreenPresenterProtocol: class {
-    func checkPassword(password: String) -> Bool
-    func checkLogin(login: String) -> Bool
+    func setPassword(password: String)
+    func setLogin(login: String)
+    func isHidePassword()-> Bool
+    func changeHidePassword()->String
+    func getPasswordForShow()->String
     func clickLogin()
     func openLink()
 }
@@ -26,13 +29,23 @@ protocol LoginScreenPresenterProtocol: class {
 //MARK: Interactor -
 protocol LoginScreenInteractorProtocol: class {
 
-  var presenter: LoginScreenPresenterProtocol?  { get set }
+    var presenter: LoginScreenPresenterProtocol?  { get set }
+    
+    func getStatusLogin()->Bool
+    func getStatusPassword()->Bool
+    func setLogin(login: String)
+    func setPassword(password: String)
+    func getPassword()->String
+    func getLogin()->String
 }
 
 //MARK: View -
 protocol LoginScreenViewProtocol: class {
     
     var presenter: LoginScreenPresenterProtocol?  { get set }
-    
+    func setTittlePasswordButton(tittle: String)
     func switchOnLoginButton()
+    func switchOnPasswordTextFild()
+    func switchOffLoginButton()
+    func switchOffPasswordTextFild()
 }

@@ -13,4 +13,87 @@ import UIKit
 class LoginScreenInteractor: LoginScreenInteractorProtocol {
 
     weak var presenter: LoginScreenPresenterProtocol?
+    
+    let loginScreenModel = LoginScreenModel()
+    
+    func setLogin(login: String) {
+        loginScreenModel.login = login
+        loginScreenModel.flagChechLogin = checkLogin(login: login)
+    }
+    
+    func getLogin()->String {
+        return loginScreenModel.login
+    }
+    
+    func setPassword(password: String) {
+        loginScreenModel.password = password
+        loginScreenModel.flagChechPassword = checkPassword(password: password)
+    }
+    
+    func getPassword()->String {
+        return loginScreenModel.password
+    }
+    
+    func getStatusLogin()->Bool {
+         return loginScreenModel.flagChechLogin
+    }
+    
+    func getStatusPassword()->Bool {
+        return loginScreenModel.flagChechPassword
+    }
+    
+    // MARK: previous common check login and password
+    func checkAll(str: String, maxCount: Int)->Bool {
+        let count = str.count
+        guard (count >= 5 && count <= maxCount) else {
+            return false
+        }
+        for char in RequestsDataAPI.restrict_characters {
+            if str.contains(char) {
+                return false
+            }
+        }
+        return true
+    }
+    
+    func checkLogin(login: String)->Bool {
+        guard checkAll(str: login, maxCount: 25) else {
+            return false
+        }
+        guard login.contains("@") else {
+            return false
+        }
+        var loginChar = Array(login)
+        var index = loginChar.lastIndex(of: ".")
+        guard index != nil else {
+            return false
+        }
+        while (index != nil) {
+            guard (index! < loginChar.count - 2) else {
+                return false
+            }
+            loginChar.removeLast(loginChar.count-index!)
+            index = loginChar.lastIndex(of: ".")
+        }
+        return true
+    }
+    
+    func checkPassword(password: String)->Bool {
+        guard checkAll(str: password, maxCount: 20) else {
+            return false
+        }
+        for check in RequestsDataAPI.checkingStrings {
+            var checkFlag = false
+            for char in check {
+                if password.contains(char) {
+                    checkFlag = true
+                    break
+                }
+            }
+            guard (checkFlag) else {
+                return false
+            }
+        }
+        return true
+    }
 }
