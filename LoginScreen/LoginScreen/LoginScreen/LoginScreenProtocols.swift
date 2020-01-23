@@ -43,7 +43,9 @@ protocol LoginScreenInteractorProtocol: class {
 protocol LoginScreenViewProtocol: class {
     
     var presenter: LoginScreenPresenterProtocol?  { get set }
-    func setTittlePasswordButton(tittle: String)
+    
+    func setTittlePasswordButtonShow()
+    func setTittlePasswordButtonHide()
     func switchOnLoginButton()
     func switchOnPasswordTextFild()
     func switchOffLoginButton()

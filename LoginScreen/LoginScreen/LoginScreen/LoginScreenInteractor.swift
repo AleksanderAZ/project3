@@ -48,7 +48,7 @@ class LoginScreenInteractor: LoginScreenInteractorProtocol {
         guard (count >= 5 && count <= maxCount) else {
             return false
         }
-        for char in RequestsDataAPI.restrict_characters {
+        for char in CharactersChecking.restrict_characters {
             if str.contains(char) {
                 return false
             }
@@ -82,7 +82,7 @@ class LoginScreenInteractor: LoginScreenInteractorProtocol {
         guard checkAll(str: password, maxCount: 20) else {
             return false
         }
-        for check in RequestsDataAPI.checkingStrings {
+        for check in CharactersChecking.checkingStrings {
             var checkFlag = false
             for char in check {
                 if password.contains(char) {

@@ -26,16 +26,11 @@ enum RestorationIdentifierTextField {
 class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
 
 	var presenter: LoginScreenPresenterProtocol?
-    @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var containerLogoView: UIView!
-    @IBOutlet weak var containerBottomView: UIView!
+    
     @IBOutlet weak var keyboardContainerViewHeightConstrain: NSLayoutConstraint!
-    @IBOutlet weak var linkStackView: UIStackView!
     @IBOutlet weak var loginTextFild: UITextField!
     @IBOutlet weak var passwordTextFild: UITextField!
-    @IBOutlet weak var logoLabel: UILabel!
     @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var linkButton: UIButton!
     @IBOutlet weak var linkTextLabel: UILabel!
     @IBOutlet weak var showPasswordButton: UIButton!
     @IBOutlet weak var passwordView: UIView!
@@ -83,11 +78,19 @@ class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
         attributedTextForLabel.append(NSAttributedString(string: textForButtonLink, attributes: attributesButtonLink))
         linkTextLabel.attributedText = attributedTextForLabel
     }
-    
-    func setTittlePasswordButton(tittle: String) {
-        showPasswordButton.setTitle(tittle, for: .normal)
+    // MARK:  set tittle Button Show
+    func setTittlePasswordButtonShow() {
+        DispatchQueue.main.async {
+            self.showPasswordButton.setTitle("🔓", for: .normal)
+        }
     }
-    
+    // MARK:  set tittle Button Hide
+    func setTittlePasswordButtonHide() {
+        DispatchQueue.main.async {
+            self.showPasswordButton.setTitle("🔒", for: .normal)
+        }
+    }
+    // MARK:  click Button Show Password
     @IBAction func clickShowPasswordButton(_ sender: UIButton) {
         passwordTextFild.text = presenter?.changeHidePassword()
     }
@@ -105,9 +108,10 @@ class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
     
     // MARK: -  change textField password
     @IBAction func changedPasswordTextField(_ sender: UITextField) {
-        guard let password = sender.text else { return }
-        presenter?.setPassword(password: password)
-        sender.text = presenter?.getPasswordForShow() ?? ""
+        guard let passwordNew = sender.text else { return }
+        presenter?.setPassword(password: passwordNew)
+        guard let passwordShow = presenter?.getPasswordForShow() else { return }
+        sender.text = passwordShow
     }
     
     // MARK: - click login Button

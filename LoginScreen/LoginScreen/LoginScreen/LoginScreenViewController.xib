@@ -11,16 +11,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginScreenViewController" customModule="LoginScreen" customModuleProvider="target">
             <connections>
-                <outlet property="containerBottomView" destination="MUU-bd-cdf" id="na0-ol-Jmq"/>
-                <outlet property="containerLogoView" destination="d0r-3w-vEb" id="rTK-nj-U6k"/>
-                <outlet property="containerView" destination="Uro-31-LjW" id="eEX-Pw-LXL"/>
                 <outlet property="keyboardContainerViewHeightConstrain" destination="XiG-I4-Ozn" id="hBh-BW-Atd"/>
-                <outlet property="linkButton" destination="Qnv-DJ-tep" id="oyz-aa-z3n"/>
-                <outlet property="linkStackView" destination="cdM-90-Lkw" id="h6W-zu-UgD"/>
                 <outlet property="linkTextLabel" destination="eWF-kd-rz7" id="Qdt-LM-HI3"/>
                 <outlet property="loginButton" destination="8dM-xc-3JF" id="PsP-ji-lf9"/>
                 <outlet property="loginTextFild" destination="Pzi-lF-x84" id="dr1-o6-mnt"/>
-                <outlet property="logoLabel" destination="SYy-S0-4WQ" id="36Q-dw-ye1"/>
                 <outlet property="passwordTextFild" destination="hzQ-eF-eEC" id="OYg-eq-dhg"/>
                 <outlet property="passwordView" destination="zon-sA-CwM" id="aY8-ST-Zys"/>
                 <outlet property="showPasswordButton" destination="VO8-1K-fJg" id="M8f-IM-8NG"/>
@@ -145,12 +139,20 @@
                     <rect key="frame" x="0.0" y="626" width="375" height="41"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eWF-kd-rz7">
-                            <rect key="frame" x="187.5" y="0.0" width="0.0" height="41"/>
-                            <attributedString key="attributedText"/>
+                            <rect key="frame" x="176.5" y="0.0" width="22" height="41"/>
+                            <attributedString key="attributedText">
+                                <fragment content="Link">
+                                    <attributes>
+                                        <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <font key="NSFont" metaFont="smallSystem"/>
+                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                    </attributes>
+                                </fragment>
+                            </attributedString>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qnv-DJ-tep">
-                            <rect key="frame" x="146.5" y="0.0" width="41" height="41"/>
+                            <rect key="frame" x="157.5" y="0.0" width="41" height="41"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="Qnv-DJ-tep" secondAttribute="height" multiplier="1:1" id="4Up-Rp-ir2"/>
