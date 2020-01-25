@@ -8,7 +8,8 @@
 
 import Foundation
 
-struct RequestsDataAPI {
+
+struct CharactersChecking {
     
     static let restrict_characters = " ”\"'’,/:;<=>?[\\]_`{|}~"
     

@@ -26,44 +26,73 @@ enum RestorationIdentifierTextField {
 class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
 
 	var presenter: LoginScreenPresenterProtocol?
-    @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var containerLogoView: UIView!
-    @IBOutlet weak var containerKeyboard: UIView!
+    
     @IBOutlet weak var keyboardContainerViewHeightConstrain: NSLayoutConstraint!
-    @IBOutlet weak var linkStackView: UIStackView!
     @IBOutlet weak var loginTextFild: UITextField!
     @IBOutlet weak var passwordTextFild: UITextField!
-    @IBOutlet weak var logoLabel: UILabel!
     @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var linkButton: UIButton!
-
-    var passwordText: String = ""
+    @IBOutlet weak var linkTextLabel: UILabel!
+    @IBOutlet weak var showPasswordButton: UIButton!
+    @IBOutlet weak var passwordView: UIView!
+    
     var hightCorrectFokusKeyb: CGFloat = 0
     var keyboadHeight: CGFloat = 0
-    let charHidePassword: Character = "●"
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // MARK: navbar config
-        self.navigationController?.navigationBar.isTranslucent = true
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.backgroundColor = UIColor.clear
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        
-        // MARK: init TextField
+        configNavigation()
+        configLinkLabel()
+        configTextFild()
+    }
+    
+    func configTextFild() {
         loginTextFild.layer.borderColor = UIColor.red.cgColor
         passwordTextFild.layer.borderColor = UIColor.red.cgColor
+        loginTextFild.layer.borderWidth = 0
         passwordTextFild.layer.borderWidth = 0
-        passwordTextFild.layer.borderWidth = 0
-        loginButton.isEnabled = false
-        loginButton.alpha = 0.5
+        loginButton.isHidden = true
+        passwordView.isHidden = true
         registerForKeyboardNotifications()
         passwordTextFild.delegate = self
         loginTextFild.delegate = self
         passwordTextFild.restorationIdentifier = RestorationIdentifierTextField.password.string
         loginTextFild.restorationIdentifier = RestorationIdentifierTextField.login.string
+    }
+    
+    func configNavigation() {
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.backgroundColor = UIColor.clear
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+    }
+    
+    func configLinkLabel() {
+        let textForLabelLink = "JOIN THE COMMUNITY! "
+        let textForButtonLink = "➲"
+        let fontText = UIFont.systemFont(ofSize: 18)
+        let fontTextButton = UIFont(name: "Zapf Dingbats", size: 22)
+        let attributesTextLink: [NSAttributedString.Key: Any] = [.font: fontText, .foregroundColor: UIColor.black]
+        let attributesButtonLink: [NSAttributedString.Key: Any] = [.font: fontTextButton ?? fontText, .foregroundColor: UIColor.blue]
+        let attributedTextForLabel = NSMutableAttributedString(string: textForLabelLink, attributes: attributesTextLink)
+        attributedTextForLabel.append(NSAttributedString(string: textForButtonLink, attributes: attributesButtonLink))
+        linkTextLabel.attributedText = attributedTextForLabel
+    }
+    // MARK:  set tittle Button Show
+    func setTittlePasswordButtonShow() {
+        DispatchQueue.main.async {
+            self.showPasswordButton.setTitle("🔓", for: .normal)
+        }
+    }
+    // MARK:  set tittle Button Hide
+    func setTittlePasswordButtonHide() {
+        DispatchQueue.main.async {
+            self.showPasswordButton.setTitle("🔒", for: .normal)
+        }
+    }
+    // MARK:  click Button Show Password
+    @IBAction func clickShowPasswordButton(_ sender: UIButton) {
+        passwordTextFild.text = presenter?.changeHidePassword()
     }
     
     // MARK: - finish edit TextField
@@ -74,39 +103,21 @@ class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
     // MARK: - change TextField Login
     @IBAction func changedLoginTextField(_ sender: UITextField) {
         guard let login = sender.text else { return }
-        sender.layer.borderWidth = 0
-        if (presenter?.checkLogin(login: login) == false) {
-            switchOffLoginButton(sender)
-        }
+        presenter?.setLogin(login: login)
     }
     
     // MARK: -  change textField password
     @IBAction func changedPasswordTextField(_ sender: UITextField) {
-        guard let password = sender.text else { return }
-        guard password.count > 0 else { return }
-        guard let lastChar = password.last else { return }
-        if (lastChar == charHidePassword || passwordText.count != password.count - 1) {
-            passwordText.removeAll()
-            sender.text = ""
-        }
-        else {
-            passwordText.append(lastChar)
-            var passwordShow = password
-            passwordShow.removeLast()
-            passwordShow.append(charHidePassword)
-            sender.text = passwordShow
-        }
-        sender.layer.borderWidth = 0
-        if (presenter?.checkPassword(password: passwordText) == false) {
-            switchOffLoginButton(sender)
-        }
-        
+        guard let passwordNew = sender.text else { return }
+        presenter?.setPassword(password: passwordNew)
+        guard let passwordShow = presenter?.getPasswordForShow() else { return }
+        sender.text = passwordShow
     }
+    
     // MARK: - click login Button
     @IBAction func clickLoginButton(_ sender: UIButton) {
         loginTextFild.resignFirstResponder()
         passwordTextFild.resignFirstResponder()
-        
         presenter?.clickLogin()
     }
     
@@ -115,21 +126,48 @@ class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
         presenter?.openLink()
     }
     
-    
     // MARK: - error login or password
-    func switchOffLoginButton(_ sender: UITextField) {
+    func switchOffLoginButton() {
         DispatchQueue.main.async {
-            self.loginButton.isEnabled = false
-            self.loginButton.alpha = 0.5
-            sender.layer.borderWidth = 3
+            guard let view = self.loginButton else { return }
+            if !(view.isHidden) {
+                UIView.transition(with: view, duration: 0.3, options: .transitionCrossDissolve, animations: { view.isHidden = true })
+            }
+            self.passwordTextFild.layer.borderWidth = 3
         }
     }
     
     // MARK: - correct login and password
     func switchOnLoginButton() {
         DispatchQueue.main.async {
-            self.loginButton.isEnabled = true
-            self.loginButton.alpha = 1
+            guard let view = self.loginButton else { return }
+            if (view.isHidden) {
+                UIView.transition(with: view, duration: 0.3, options: .transitionCrossDissolve, animations: { view.isHidden = false })
+            }
+            self.loginTextFild.layer.borderWidth = 0
+            self.passwordTextFild.layer.borderWidth = 0
+        }
+    }
+    
+    // MARK: - error login or password
+    func switchOffPasswordTextFild() {
+        DispatchQueue.main.async {
+            guard let view = self.passwordView else { return }
+            if !(view.isHidden) {
+                UIView.transition(with: view, duration: 0.3, options: .transitionCrossDissolve, animations: { view.isHidden = true })
+            }
+            self.loginTextFild.layer.borderWidth = 3
+        }
+        switchOffLoginButton()
+    }
+    
+    // MARK: - correct login and password
+    func switchOnPasswordTextFild() {
+        DispatchQueue.main.async {
+            guard let view = self.passwordView else { return }
+            if (view.isHidden) {
+                UIView.transition(with: view, duration: 0.3, options: .transitionCrossDissolve, animations: { view.isHidden = false })
+            }
             self.loginTextFild.layer.borderWidth = 0
             self.passwordTextFild.layer.borderWidth = 0
         }
@@ -161,10 +199,10 @@ extension LoginScreenViewController: UITextFieldDelegate {
     // MARK: -  clouse keyboard
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if (textField.restorationIdentifier == RestorationIdentifierTextField.password.string) {
-            changedPasswordTextField(textField)
+         //   changedPasswordTextField(textField)
         }
         else {
-            changedLoginTextField(textField)
+          //  changedLoginTextField(textField)
         }
         
         textField.resignFirstResponder()
@@ -200,10 +238,10 @@ extension LoginScreenViewController: UITextFieldDelegate {
     func changeKeyboardContainerViewHeightConstrain(keyboardHeight: CGFloat) {
         DispatchQueue.main.async {
             if (keyboardHeight > 0) {
-                self.keyboardContainerViewHeightConstrain.constant = keyboardHeight - self.linkStackView.frame.size.height + self.hightCorrectFokusKeyb
+                self.keyboardContainerViewHeightConstrain.constant = keyboardHeight + self.hightCorrectFokusKeyb
             }
             else {
-                self.keyboardContainerViewHeightConstrain.constant = 0
+                self.keyboardContainerViewHeightConstrain.constant = self.linkTextLabel.frame.size.height
             }
         }
     }
