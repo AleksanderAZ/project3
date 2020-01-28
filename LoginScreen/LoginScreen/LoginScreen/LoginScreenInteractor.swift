@@ -19,6 +19,7 @@ class LoginScreenInteractor: LoginScreenInteractorProtocol {
     func setLogin(login: String) {
         loginScreenModel.login = login
         loginScreenModel.flagChechLogin = checkLogin(login: login)
+        loginScreenModel.checkLogin = checkLogin(login: login)
     }
     
     func getLogin()->String {
@@ -28,6 +29,7 @@ class LoginScreenInteractor: LoginScreenInteractorProtocol {
     func setPassword(password: String) {
         loginScreenModel.password = password
         loginScreenModel.flagChechPassword = checkPassword(password: password)
+        loginScreenModel.checkPassword = checkPassword(password: password)
     }
     
     func getPassword()->String {
@@ -37,9 +39,14 @@ class LoginScreenInteractor: LoginScreenInteractorProtocol {
     func getStatusLogin()->Bool {
          return loginScreenModel.flagChechLogin
     }
-    
+    func getStatusCheckLogin()->Check {
+        return loginScreenModel.checkLogin
+    }
     func getStatusPassword()->Bool {
         return loginScreenModel.flagChechPassword
+    }
+    func getStatusCheckPassword()->Check {
+        return loginScreenModel.checkPassword
     }
     
     // MARK: previous common check login and password
@@ -54,6 +61,19 @@ class LoginScreenInteractor: LoginScreenInteractorProtocol {
             }
         }
         return true
+    }
+    
+    func checkAll(str: String, maxCount: Int)->Check {
+        let count = str.count
+        guard (count >= 5 && count <= maxCount) else {
+            return Check.no("Characters number must >4 and <\(maxCount)")
+        }
+        for char in CharactersChecking.restrict_characters {
+            if str.contains(char) {
+                return Check.no("Restricted characters - \"\(char)\"")
+            }
+        }
+        return Check.yes
     }
     
     func checkLogin(login: String)->Bool {
@@ -78,6 +98,30 @@ class LoginScreenInteractor: LoginScreenInteractorProtocol {
         return true
     }
     
+    func checkLogin(login: String)->Check {
+        let check: Check
+        check = checkAll(str: login, maxCount: 25)
+        guard check == .yes else {
+            return check
+        }
+        guard login.contains("@") else {
+            return Check.no("Login must contains - \"@\"")
+        }
+        var loginChar = Array(login)
+        var index = loginChar.lastIndex(of: ".")
+        guard index != nil else {
+            return Check.no("Login must contains - \".\"")
+        }
+        while (index != nil) {
+            guard (index! < loginChar.count - 2) else {
+                return Check.no("Login must contains 2 characters after \".\"")
+            }
+            loginChar.removeLast(loginChar.count-index!)
+            index = loginChar.lastIndex(of: ".")
+        }
+        return Check.yes
+    }
+    
     func checkPassword(password: String)->Bool {
         guard checkAll(str: password, maxCount: 20) else {
             return false
@@ -95,5 +139,45 @@ class LoginScreenInteractor: LoginScreenInteractorProtocol {
             }
         }
         return true
+    }
+    
+    func checkPassword(password: String)->Check {
+        let check: Check
+        check = checkAll(str: password, maxCount: 20)
+        guard check == .yes else {
+            return check
+        }
+        
+        for check in CharactersChecking.checkingStrings {
+            var checkFlag = false
+            for char in check {
+                if password.contains(char) {
+                    checkFlag = true
+                    break
+                }
+            }
+            guard (checkFlag) else {
+                return Check.no("Login must contains - number, latin characters lowercase and uppercase, special character")
+            }
+        }
+        return Check.yes
+    }
+    
+    func changeHidePassword(password: String, passwordHide: String)->String {
+        var password = password
+        guard (passwordHide.count > 0) else { return ""}
+        guard (passwordHide.count >= password.count) else { return "" }
+        guard (passwordHide.count > password.count) else { return password }
+        guard let _ = passwordHide.lastIndex(where: {$0 != CharactersChecking.charHidePassword}) else { return "" }
+        var newPassword = ""
+        for char in passwordHide {
+            if (char == CharactersChecking.charHidePassword) {
+                newPassword.append(password.removeFirst())
+            }
+            else {
+                newPassword.append(char)
+            }
+        }
+        return newPassword
     }
 }

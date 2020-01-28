@@ -34,6 +34,8 @@ class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
     @IBOutlet weak var linkTextLabel: UILabel!
     @IBOutlet weak var showPasswordButton: UIButton!
     @IBOutlet weak var passwordView: UIView!
+    @IBOutlet weak var buttonLoadView: UIView!
+    @IBOutlet weak var errorTextLabel: UILabel!
     
     var hightCorrectFokusKeyb: CGFloat = 0
     var keyboadHeight: CGFloat = 0
@@ -51,8 +53,10 @@ class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
         passwordTextFild.layer.borderColor = UIColor.red.cgColor
         loginTextFild.layer.borderWidth = 0
         passwordTextFild.layer.borderWidth = 0
-        loginButton.isHidden = true
+        buttonLoadView.isHidden = true
         passwordView.isHidden = true
+        errorTextLabel.text = ""
+        errorTextLabel.isHidden = true
         registerForKeyboardNotifications()
         passwordTextFild.delegate = self
         loginTextFild.delegate = self
@@ -69,14 +73,16 @@ class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
     
     func configLinkLabel() {
         let textForLabelLink = "JOIN THE COMMUNITY! "
-        let textForButtonLink = "➲"
-        let fontText = UIFont.systemFont(ofSize: 18)
-        let fontTextButton = UIFont(name: "Zapf Dingbats", size: 22)
-        let attributesTextLink: [NSAttributedString.Key: Any] = [.font: fontText, .foregroundColor: UIColor.black]
-        let attributesButtonLink: [NSAttributedString.Key: Any] = [.font: fontTextButton ?? fontText, .foregroundColor: UIColor.blue]
-        let attributedTextForLabel = NSMutableAttributedString(string: textForLabelLink, attributes: attributesTextLink)
-        attributedTextForLabel.append(NSAttributedString(string: textForButtonLink, attributes: attributesButtonLink))
+        guard let linkURL = URL(string: "http://app.link.com") else { return }
+        let attributedTextForLabel = NSMutableAttributedString(string: textForLabelLink, attributes: [NSAttributedString.Key.link: linkURL])
         linkTextLabel.attributedText = attributedTextForLabel
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapLinkLabel))
+        linkTextLabel.addGestureRecognizer(tap)
+        linkTextLabel.isUserInteractionEnabled = true
+    }
+    
+    @objc func tapLinkLabel(gesrure: UITapGestureRecognizer) {
+        presenter?.openLink()
     }
     // MARK:  set tittle Button Show
     func setTittlePasswordButtonShow() {
@@ -121,58 +127,37 @@ class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
         presenter?.clickLogin()
     }
     
-    // MARK: -  click link Button
-    @IBAction func clickLinkButton(_ sender: UIButton) {
-        presenter?.openLink()
-    }
-    
-    // MARK: - error login or password
-    func switchOffLoginButton() {
-        DispatchQueue.main.async {
-            guard let view = self.loginButton else { return }
-            if !(view.isHidden) {
-                UIView.transition(with: view, duration: 0.3, options: .transitionCrossDissolve, animations: { view.isHidden = true })
-            }
-            self.passwordTextFild.layer.borderWidth = 3
-        }
-    }
-    
-    // MARK: - correct login and password
-    func switchOnLoginButton() {
-        DispatchQueue.main.async {
-            guard let view = self.loginButton else { return }
-            if (view.isHidden) {
-                UIView.transition(with: view, duration: 0.3, options: .transitionCrossDissolve, animations: { view.isHidden = false })
-            }
-            self.loginTextFild.layer.borderWidth = 0
-            self.passwordTextFild.layer.borderWidth = 0
-        }
-    }
-    
-    // MARK: - error login or password
-    func switchOffPasswordTextFild() {
-        DispatchQueue.main.async {
-            guard let view = self.passwordView else { return }
-            if !(view.isHidden) {
-                UIView.transition(with: view, duration: 0.3, options: .transitionCrossDissolve, animations: { view.isHidden = true })
-            }
-            self.loginTextFild.layer.borderWidth = 3
-        }
-        switchOffLoginButton()
-    }
-    
-    // MARK: - correct login and password
-    func switchOnPasswordTextFild() {
-        DispatchQueue.main.async {
-            guard let view = self.passwordView else { return }
-            if (view.isHidden) {
-                UIView.transition(with: view, duration: 0.3, options: .transitionCrossDissolve, animations: { view.isHidden = false })
-            }
-            self.loginTextFild.layer.borderWidth = 0
-            self.passwordTextFild.layer.borderWidth = 0
-        }
+    func switchLoginButton(isHide: Bool, errorText: String) {
+        guard let switchview = self.buttonLoadView else { return }
+        guard let errorTextFild = self.passwordTextFild else { return }
+        switchView(isHide: isHide, view: switchview, errorTextFild: errorTextFild, errorText: errorText)
     }
 
+    func switchPasswordTextFild(isHide: Bool, errorText: String) {
+        guard let switchview = self.passwordView  else { return }
+        guard let errorTextFild = self.passwordTextFild else { return }
+        switchView(isHide: isHide, view: switchview, errorTextFild: errorTextFild, errorText: errorText)
+    }
+    
+    func switchView(isHide: Bool, view: UIView, errorTextFild: UITextField, errorText: String) {
+        DispatchQueue.main.async {
+            if (view.isHidden != isHide) {
+                UIView.transition(with: view, duration: 0.3, options: .transitionCrossDissolve, animations: { view.isHidden = isHide })
+            }
+            if (isHide) {
+                errorTextFild.layer.borderWidth = 3
+                self.errorTextLabel.text = errorText
+                self.errorTextLabel.isHidden = false
+            }
+            else{
+                self.loginTextFild.layer.borderWidth = 0
+                self.passwordTextFild.layer.borderWidth = 0
+                self.errorTextLabel.text = ""
+                self.errorTextLabel.isHidden = true
+            }
+        }
+    }
+    
     deinit {
         removeForKeyboardNotifications()
     }
@@ -184,6 +169,8 @@ extension LoginScreenViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         self.passwordTextFild.layer.borderWidth = 0
         self.passwordTextFild.layer.borderWidth = 0
+        self.errorTextLabel.text = ""
+        self.errorTextLabel.isHidden = true
         if (textField.restorationIdentifier == RestorationIdentifierTextField.password.string) {
             hightCorrectFokusKeyb = textField.frame.size.height
         }
@@ -198,13 +185,6 @@ extension LoginScreenViewController: UITextFieldDelegate {
     
     // MARK: -  clouse keyboard
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if (textField.restorationIdentifier == RestorationIdentifierTextField.password.string) {
-         //   changedPasswordTextField(textField)
-        }
-        else {
-          //  changedLoginTextField(textField)
-        }
-        
         textField.resignFirstResponder()
         return true
     }
