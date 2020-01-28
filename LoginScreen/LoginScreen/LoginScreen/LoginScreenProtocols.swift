@@ -38,6 +38,8 @@ protocol LoginScreenInteractorProtocol: class {
     func getPassword()->String
     func getLogin()->String
     func changeHidePassword(password: String, passwordHide: String)->String
+    func getStatusCheckLogin()->Check
+    func getStatusCheckPassword()->Check
 }
 
 //MARK: View -

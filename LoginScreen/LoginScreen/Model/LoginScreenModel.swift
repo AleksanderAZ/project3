@@ -20,9 +20,16 @@ struct CharactersChecking {
     static let checkingStrings = [numbers, lower_case, upper_case, special_characters]
 }
 
+enum Check: Equatable {
+    case yes
+    case no (String)
+}
+
 class LoginScreenModel {
     var flagChechLogin: Bool = false
     var flagChechPassword: Bool = false
+    var checkLogin: Check = Check.no("")
+    var checkPassword: Check = Check.no("")
     var login: String = ""
     var password: String = ""
 }

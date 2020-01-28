@@ -27,6 +27,7 @@ class LoginScreenPresenter: LoginScreenPresenterProtocol {
     func setLogin(login: String) {
         interactor?.setLogin(login: login)
         updateView()
+        updateViewNew()
     }
     
     func setPassword(password: String) {
@@ -37,6 +38,7 @@ class LoginScreenPresenter: LoginScreenPresenterProtocol {
         }
         interactor?.setPassword(password: passwordNew)
         updateView()
+        updateViewNew()
     }
     
     // MARK:  finaly check passwor and login
@@ -62,6 +64,25 @@ class LoginScreenPresenter: LoginScreenPresenterProtocol {
     
     func isHidePassword()-> Bool {
         return statusHidePassword
+    }
+    
+    func updateViewNew() {
+        guard let interactor = interactor else { return }
+        let checkLogin: Check = interactor.getStatusCheckLogin()
+        if case .no(let error) = checkLogin {
+            print(error)
+            view?.switchLoginButton(isHide: true)
+            view?.switchPasswordTextFild(isHide: true)
+            return
+        }
+        view?.switchPasswordTextFild(isHide: false)
+        let checkPassword: Check = interactor.getStatusCheckPassword()
+        if case .no(let error) = checkPassword {
+            print(error)
+            view?.switchLoginButton(isHide: true)
+            return
+        }
+        view?.switchLoginButton(isHide: false)
     }
     
     func changeHidePassword()->String {
