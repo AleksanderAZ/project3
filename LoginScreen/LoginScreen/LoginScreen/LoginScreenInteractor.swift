@@ -96,4 +96,22 @@ class LoginScreenInteractor: LoginScreenInteractorProtocol {
         }
         return true
     }
+    
+    func changeHidePassword(password: String, passwordHide: String)->String {
+        var password = password
+        guard (passwordHide.count > 0) else { return ""}
+        guard (passwordHide.count >= password.count) else { return "" }
+        guard (passwordHide.count > password.count) else { return password }
+        guard let _ = passwordHide.lastIndex(where: {$0 != CharactersChecking.charHidePassword}) else { return "" }
+        var newPassword = ""
+        for char in passwordHide {
+            if (char == CharactersChecking.charHidePassword) {
+                newPassword.append(password.removeFirst())
+            }
+            else {
+                newPassword.append(char)
+            }
+        }
+        return newPassword
+    }
 }

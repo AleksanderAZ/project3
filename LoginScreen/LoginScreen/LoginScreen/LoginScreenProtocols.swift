@@ -37,6 +37,7 @@ protocol LoginScreenInteractorProtocol: class {
     func setPassword(password: String)
     func getPassword()->String
     func getLogin()->String
+    func changeHidePassword(password: String, passwordHide: String)->String
 }
 
 //MARK: View -
@@ -44,10 +45,8 @@ protocol LoginScreenViewProtocol: class {
     
     var presenter: LoginScreenPresenterProtocol?  { get set }
     
+    func switchLoginButton(isHide: Bool)
+    func switchPasswordTextFild(isHide: Bool)
     func setTittlePasswordButtonShow()
     func setTittlePasswordButtonHide()
-    func switchOnLoginButton()
-    func switchOnPasswordTextFild()
-    func switchOffLoginButton()
-    func switchOffPasswordTextFild()
 }

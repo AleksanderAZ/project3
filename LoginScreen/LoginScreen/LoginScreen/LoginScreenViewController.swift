@@ -34,6 +34,7 @@ class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
     @IBOutlet weak var linkTextLabel: UILabel!
     @IBOutlet weak var showPasswordButton: UIButton!
     @IBOutlet weak var passwordView: UIView!
+    @IBOutlet weak var buttonLoadView: UIView!
     
     var hightCorrectFokusKeyb: CGFloat = 0
     var keyboadHeight: CGFloat = 0
@@ -51,7 +52,7 @@ class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
         passwordTextFild.layer.borderColor = UIColor.red.cgColor
         loginTextFild.layer.borderWidth = 0
         passwordTextFild.layer.borderWidth = 0
-        loginButton.isHidden = true
+        buttonLoadView.isHidden = true
         passwordView.isHidden = true
         registerForKeyboardNotifications()
         passwordTextFild.delegate = self
@@ -126,53 +127,33 @@ class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
         presenter?.openLink()
     }
     
-    // MARK: - error login or password
-    func switchOffLoginButton() {
-        DispatchQueue.main.async {
-            guard let view = self.loginButton else { return }
-            if !(view.isHidden) {
-                UIView.transition(with: view, duration: 0.3, options: .transitionCrossDissolve, animations: { view.isHidden = true })
-            }
-            self.passwordTextFild.layer.borderWidth = 3
-        }
-    }
-    
-    // MARK: - correct login and password
-    func switchOnLoginButton() {
-        DispatchQueue.main.async {
-            guard let view = self.loginButton else { return }
-            if (view.isHidden) {
-                UIView.transition(with: view, duration: 0.3, options: .transitionCrossDissolve, animations: { view.isHidden = false })
-            }
-            self.loginTextFild.layer.borderWidth = 0
-            self.passwordTextFild.layer.borderWidth = 0
-        }
-    }
-    
-    // MARK: - error login or password
-    func switchOffPasswordTextFild() {
-        DispatchQueue.main.async {
-            guard let view = self.passwordView else { return }
-            if !(view.isHidden) {
-                UIView.transition(with: view, duration: 0.3, options: .transitionCrossDissolve, animations: { view.isHidden = true })
-            }
-            self.loginTextFild.layer.borderWidth = 3
-        }
-        switchOffLoginButton()
-    }
-    
-    // MARK: - correct login and password
-    func switchOnPasswordTextFild() {
-        DispatchQueue.main.async {
-            guard let view = self.passwordView else { return }
-            if (view.isHidden) {
-                UIView.transition(with: view, duration: 0.3, options: .transitionCrossDissolve, animations: { view.isHidden = false })
-            }
-            self.loginTextFild.layer.borderWidth = 0
-            self.passwordTextFild.layer.borderWidth = 0
-        }
+    func switchLoginButton(isHide: Bool) {
+        guard let switchview = self.buttonLoadView else { return }
+        guard let errorTextFild = self.passwordTextFild else { return }
+        switchView(isHide: isHide, view: switchview, errorTextFild: errorTextFild)
     }
 
+    func switchPasswordTextFild(isHide: Bool) {
+        guard let switchview = self.passwordView  else { return }
+        guard let errorTextFild = self.passwordTextFild else { return }
+        switchView(isHide: isHide, view: switchview, errorTextFild: errorTextFild)
+    }
+    
+    func switchView(isHide: Bool, view: UIView, errorTextFild: UITextField) {
+        DispatchQueue.main.async {
+            if (view.isHidden != isHide) {
+                UIView.transition(with: view, duration: 0.3, options: .transitionCrossDissolve, animations: { view.isHidden = isHide })
+            }
+            if (isHide) {
+                errorTextFild.layer.borderWidth = 3
+            }
+            else{
+                self.loginTextFild.layer.borderWidth = 0
+                self.passwordTextFild.layer.borderWidth = 0
+            }
+        }
+    }
+    
     deinit {
         removeForKeyboardNotifications()
     }

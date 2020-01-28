@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginScreenViewController" customModule="LoginScreen" customModuleProvider="target">
             <connections>
+                <outlet property="buttonLoadView" destination="ewc-9g-7Z0" id="6UW-Dl-0sz"/>
                 <outlet property="keyboardContainerViewHeightConstrain" destination="XiG-I4-Ozn" id="hBh-BW-Atd"/>
                 <outlet property="linkTextLabel" destination="eWF-kd-rz7" id="Qdt-LM-HI3"/>
                 <outlet property="loginButton" destination="8dM-xc-3JF" id="PsP-ji-lf9"/>
@@ -110,16 +111,28 @@
                                         <constraint firstItem="hzQ-eF-eEC" firstAttribute="top" secondItem="zon-sA-CwM" secondAttribute="top" id="uad-Sy-OxU"/>
                                     </constraints>
                                 </view>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8dM-xc-3JF">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ewc-9g-7Z0">
                                     <rect key="frame" x="0.0" y="76" width="300" height="30"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8dM-xc-3JF">
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="30"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <state key="normal" title="LOG IN">
+                                                <color key="titleColor" red="0.6209351206" green="0.036398784099999998" blue="0.04802608303" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="clickLoginButton:" destination="-1" eventType="touchUpInside" id="blY-Xh-pD5"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <state key="normal" title="LOG IN">
-                                        <color key="titleColor" red="0.6209351206" green="0.036398784099999998" blue="0.04802608303" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="clickLoginButton:" destination="-1" eventType="touchUpInside" id="blY-Xh-pD5"/>
-                                    </connections>
-                                </button>
+                                    <constraints>
+                                        <constraint firstItem="8dM-xc-3JF" firstAttribute="top" secondItem="ewc-9g-7Z0" secondAttribute="top" id="U3N-QE-wBe"/>
+                                        <constraint firstAttribute="bottom" secondItem="8dM-xc-3JF" secondAttribute="bottom" id="XQE-je-VkH"/>
+                                        <constraint firstAttribute="trailing" secondItem="8dM-xc-3JF" secondAttribute="trailing" id="dvx-3U-Rd7"/>
+                                        <constraint firstItem="8dM-xc-3JF" firstAttribute="leading" secondItem="ewc-9g-7Z0" secondAttribute="leading" id="g0D-tD-Yq9"/>
+                                    </constraints>
+                                </view>
                             </subviews>
                         </stackView>
                     </subviews>

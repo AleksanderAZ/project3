@@ -12,7 +12,7 @@ import Foundation
 struct CharactersChecking {
     
     static let restrict_characters = " ”\"'’,/:;<=>?[\\]_`{|}~"
-    
+    static let charHidePassword: Character = "●"
     static let numbers = "0123456789"
     static let lower_case = "abcdefghijklmnopqrstuvwxyz"
     static let upper_case = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
