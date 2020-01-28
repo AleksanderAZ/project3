@@ -27,7 +27,6 @@ class LoginScreenPresenter: LoginScreenPresenterProtocol {
     func setLogin(login: String) {
         interactor?.setLogin(login: login)
         updateView()
-        updateViewNew()
     }
     
     func setPassword(password: String) {
@@ -38,51 +37,30 @@ class LoginScreenPresenter: LoginScreenPresenterProtocol {
         }
         interactor?.setPassword(password: passwordNew)
         updateView()
-        updateViewNew()
-    }
-    
-    // MARK:  finaly check passwor and login
-    func updateView() {
-        guard let loginStatus = interactor?.getStatusLogin()  else { return }
-        guard loginStatus else {
-            //view?.switchOffPasswordTextFild();
-            view?.switchLoginButton(isHide: true)
-            view?.switchPasswordTextFild(isHide: true)
-            return
-        }
-        //view?.switchOnPasswordTextFild()
-        view?.switchPasswordTextFild(isHide: false)
-        guard let passwordStatus = interactor?.getStatusPassword()  else { return }
-        guard passwordStatus else {
-            view?.switchLoginButton(isHide: true)
-            //view?.switchOffLoginButton() ;
-            return
-        }
-        //view?.switchOnLoginButton()
-        view?.switchLoginButton(isHide: false)
     }
     
     func isHidePassword()-> Bool {
         return statusHidePassword
     }
     
-    func updateViewNew() {
+    func updateView() {
         guard let interactor = interactor else { return }
         let checkLogin: Check = interactor.getStatusCheckLogin()
         if case .no(let error) = checkLogin {
             print(error)
-            view?.switchLoginButton(isHide: true)
-            view?.switchPasswordTextFild(isHide: true)
+            view?.switchLoginButton(isHide: true, errorText: error)
+            view?.switchPasswordTextFild(isHide: true, errorText: error)
             return
         }
-        view?.switchPasswordTextFild(isHide: false)
+        view?.switchPasswordTextFild(isHide: false, errorText: "")
+        
         let checkPassword: Check = interactor.getStatusCheckPassword()
         if case .no(let error) = checkPassword {
             print(error)
-            view?.switchLoginButton(isHide: true)
+            view?.switchLoginButton(isHide: true, errorText: error)
             return
         }
-        view?.switchLoginButton(isHide: false)
+        view?.switchLoginButton(isHide: false, errorText: "")
     }
     
     func changeHidePassword()->String {

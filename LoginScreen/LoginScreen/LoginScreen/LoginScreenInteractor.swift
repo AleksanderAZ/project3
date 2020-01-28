@@ -48,6 +48,7 @@ class LoginScreenInteractor: LoginScreenInteractorProtocol {
     func getStatusCheckPassword()->Check {
         return loginScreenModel.checkPassword
     }
+    
     // MARK: previous common check login and password
     func checkAll(str: String, maxCount: Int)->Bool {
         let count = str.count
@@ -69,7 +70,7 @@ class LoginScreenInteractor: LoginScreenInteractorProtocol {
         }
         for char in CharactersChecking.restrict_characters {
             if str.contains(char) {
-                return Check.no("Restricted characters - \(char)")
+                return Check.no("Restricted characters - \"\(char)\"")
             }
         }
         return Check.yes

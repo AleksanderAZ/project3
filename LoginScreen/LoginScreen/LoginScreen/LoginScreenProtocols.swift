@@ -47,8 +47,8 @@ protocol LoginScreenViewProtocol: class {
     
     var presenter: LoginScreenPresenterProtocol?  { get set }
     
-    func switchLoginButton(isHide: Bool)
-    func switchPasswordTextFild(isHide: Bool)
+    func switchLoginButton(isHide: Bool, errorText: String)
+    func switchPasswordTextFild(isHide: Bool, errorText: String)
     func setTittlePasswordButtonShow()
     func setTittlePasswordButtonHide()
 }
