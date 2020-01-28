@@ -135,7 +135,7 @@ class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
 
     func switchPasswordTextFild(isHide: Bool, errorText: String) {
         guard let switchview = self.passwordView  else { return }
-        guard let errorTextFild = self.passwordTextFild else { return }
+        guard let errorTextFild = self.loginTextFild else { return }
         switchView(isHide: isHide, view: switchview, errorTextFild: errorTextFild, errorText: errorText)
     }
     
@@ -145,7 +145,7 @@ class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
                 UIView.transition(with: view, duration: 0.3, options: .transitionCrossDissolve, animations: { view.isHidden = isHide })
             }
             if (isHide) {
-                errorTextFild.layer.borderWidth = 3
+                errorTextFild.layer.borderWidth = 1
                 self.errorTextLabel.text = errorText
                 self.errorTextLabel.isHidden = false
             }
