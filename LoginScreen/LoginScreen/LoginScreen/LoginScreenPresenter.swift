@@ -47,7 +47,6 @@ class LoginScreenPresenter: LoginScreenPresenterProtocol {
         guard let interactor = interactor else { return }
         let checkLogin: Check = interactor.getStatusCheckLogin()
         if case .no(let error) = checkLogin {
-            print(error)
             view?.switchLoginButton(isHide: true, errorText: error)
             view?.switchPasswordTextFild(isHide: true, errorText: error)
             return
@@ -56,7 +55,6 @@ class LoginScreenPresenter: LoginScreenPresenterProtocol {
         
         let checkPassword: Check = interactor.getStatusCheckPassword()
         if case .no(let error) = checkPassword {
-            print(error)
             view?.switchLoginButton(isHide: true, errorText: error)
             return
         }

@@ -141,20 +141,38 @@ class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
     
     func switchView(isHide: Bool, view: UIView, errorTextFild: UITextField, errorText: String) {
         DispatchQueue.main.async {
-            if (view.isHidden != isHide) {
-                UIView.transition(with: view, duration: 0.3, options: .transitionCrossDissolve, animations: { view.isHidden = isHide })
-            }
             if (isHide) {
-                errorTextFild.layer.borderWidth = 1
+                if (errorTextFild.text != nil && errorTextFild.text != "") {
+                    errorTextFild.layer.borderWidth = 1
+                }
                 self.errorTextLabel.text = errorText
-                self.errorTextLabel.isHidden = false
             }
             else{
                 self.loginTextFild.layer.borderWidth = 0
                 self.passwordTextFild.layer.borderWidth = 0
-                self.errorTextLabel.text = ""
-                self.errorTextLabel.isHidden = true
             }
+            
+            if (view.isHidden != isHide) {
+                for view in view.subviews {
+                    UIView.transition(with: view, duration: 0.2, options: .transitionCrossDissolve, animations: { view.isHidden = isHide })
+                }
+                UIView.transition(with: view, duration: 0.1, options: .transitionCrossDissolve, animations: { view.isHidden = isHide }) { (result) in
+                        if result {
+                            self.animatErrorLabel(isHide: isHide, errorText: errorText)
+                        }
+                    }
+            }
+            else {
+                self.animatErrorLabel(isHide: isHide, errorText: errorText)
+            }
+        }
+    }
+    
+    func animatErrorLabel (isHide: Bool, errorText: String) {
+        if (self.errorTextLabel.isHidden == isHide) {
+            UIView.animate(withDuration: 0.2, delay: 0.0, options: .transitionFlipFromLeft, animations:  {
+                self.errorTextLabel.isHidden = !isHide
+            })
         }
     }
     
