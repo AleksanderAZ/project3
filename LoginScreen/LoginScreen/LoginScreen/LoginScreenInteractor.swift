@@ -16,53 +16,60 @@ class LoginScreenInteractor: LoginScreenInteractorProtocol {
     
     let loginScreenModel = LoginScreenModel()
     
+    var statusHidePassword: Bool = true
+    
+    func isHidePassword()-> Bool {
+        return statusHidePassword
+    }
+    
+    func changeStatusHidePassword() {
+        statusHidePassword = !statusHidePassword
+    }
+    
+    
+    
     func setLogin(login: String) {
         loginScreenModel.login = login
-        loginScreenModel.flagChechLogin = checkLogin(login: login)
-        loginScreenModel.checkLogin = checkLogin(login: login)
+        loginScreenModel.checkLogin = checkLogin(login: loginScreenModel.login)
     }
     
     func getLogin()->String {
         return loginScreenModel.login
     }
     
+    func getStatusCheckLogin()->Check {
+        return loginScreenModel.checkLogin
+    }
+    
     func setPassword(password: String) {
-        loginScreenModel.password = password
-        loginScreenModel.flagChechPassword = checkPassword(password: password)
-        loginScreenModel.checkPassword = checkPassword(password: password)
+        var passwordNew = password
+        if (isHidePassword()) {
+            let password = getPassword()
+            passwordNew = changeHidePassword(password: password, passwordHide: passwordNew)
+        }
+        loginScreenModel.password = passwordNew
+        loginScreenModel.checkPassword = checkPassword(password: loginScreenModel.password)
     }
     
     func getPassword()->String {
         return loginScreenModel.password
     }
     
-    func getStatusLogin()->Bool {
-         return loginScreenModel.flagChechLogin
+    func getPasswordForShow()->String {
+        let password = getPassword()
+        if (isHidePassword()) {
+            return String(repeating: CharactersChecking.charHidePassword, count: password.count)
+        }
+        else {
+            return password
+        }
     }
-    func getStatusCheckLogin()->Check {
-        return loginScreenModel.checkLogin
-    }
-    func getStatusPassword()->Bool {
-        return loginScreenModel.flagChechPassword
-    }
+    
     func getStatusCheckPassword()->Check {
         return loginScreenModel.checkPassword
     }
     
     // MARK: previous common check login and password
-    func checkAll(str: String, maxCount: Int)->Bool {
-        let count = str.count
-        guard (count >= 5 && count <= maxCount) else {
-            return false
-        }
-        for char in CharactersChecking.restrict_characters {
-            if str.contains(char) {
-                return false
-            }
-        }
-        return true
-    }
-    
     func checkAll(str: String, maxCount: Int)->Check {
         let count = str.count
         guard (count >= 5 && count <= maxCount) else {
@@ -74,28 +81,6 @@ class LoginScreenInteractor: LoginScreenInteractorProtocol {
             }
         }
         return Check.yes
-    }
-    
-    func checkLogin(login: String)->Bool {
-        guard checkAll(str: login, maxCount: 25) else {
-            return false
-        }
-        guard login.contains("@") else {
-            return false
-        }
-        var loginChar = Array(login)
-        var index = loginChar.lastIndex(of: ".")
-        guard index != nil else {
-            return false
-        }
-        while (index != nil) {
-            guard (index! < loginChar.count - 2) else {
-                return false
-            }
-            loginChar.removeLast(loginChar.count-index!)
-            index = loginChar.lastIndex(of: ".")
-        }
-        return true
     }
     
     func checkLogin(login: String)->Check {
@@ -120,25 +105,6 @@ class LoginScreenInteractor: LoginScreenInteractorProtocol {
             index = loginChar.lastIndex(of: ".")
         }
         return Check.yes
-    }
-    
-    func checkPassword(password: String)->Bool {
-        guard checkAll(str: password, maxCount: 20) else {
-            return false
-        }
-        for check in CharactersChecking.checkingStrings {
-            var checkFlag = false
-            for char in check {
-                if password.contains(char) {
-                    checkFlag = true
-                    break
-                }
-            }
-            guard (checkFlag) else {
-                return false
-            }
-        }
-        return true
     }
     
     func checkPassword(password: String)->Check {

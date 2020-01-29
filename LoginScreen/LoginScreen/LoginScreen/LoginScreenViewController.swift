@@ -98,7 +98,7 @@ class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
     }
     // MARK:  click Button Show Password
     @IBAction func clickShowPasswordButton(_ sender: UIButton) {
-        passwordTextFild.text = presenter?.changeHidePassword()
+        passwordTextFild.text = presenter?.changeStatusHidePassword()
     }
     
     // MARK: - finish edit TextField
@@ -154,9 +154,9 @@ class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
             
             if (view.isHidden != isHide) {
                 for view in view.subviews {
-                    UIView.transition(with: view, duration: 0.2, options: .transitionCrossDissolve, animations: { view.isHidden = isHide })
+                    UIView.transition(with: view, duration: 0.3, options: .transitionCrossDissolve, animations: { view.isHidden = isHide })
                 }
-                UIView.transition(with: view, duration: 0.1, options: .transitionCrossDissolve, animations: { view.isHidden = isHide }) { (result) in
+                UIView.transition(with: view, duration: 0.2, options: .transitionCrossDissolve, animations: { view.isHidden = isHide }) { (result) in
                         if result {
                             self.animatErrorLabel(isHide: isHide, errorText: errorText)
                         }
@@ -170,7 +170,7 @@ class LoginScreenViewController: UIViewController, LoginScreenViewProtocol {
     
     func animatErrorLabel (isHide: Bool, errorText: String) {
         if (self.errorTextLabel.isHidden == isHide) {
-            UIView.animate(withDuration: 0.2, delay: 0.0, options: .transitionFlipFromLeft, animations:  {
+            UIView.animate(withDuration: 0.1, delay: 0.0, options: .transitionFlipFromLeft, animations:  {
                 self.errorTextLabel.isHidden = !isHide
             })
         }

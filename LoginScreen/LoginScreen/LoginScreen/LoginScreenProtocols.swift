@@ -19,8 +19,7 @@ protocol LoginScreenWireframeProtocol: class {
 protocol LoginScreenPresenterProtocol: class {
     func setPassword(password: String)
     func setLogin(login: String)
-    func isHidePassword()-> Bool
-    func changeHidePassword()->String
+    func changeStatusHidePassword()->String
     func getPasswordForShow()->String
     func clickLogin()
     func openLink()
@@ -31,15 +30,15 @@ protocol LoginScreenInteractorProtocol: class {
 
     var presenter: LoginScreenPresenterProtocol?  { get set }
     
-    func getStatusLogin()->Bool
-    func getStatusPassword()->Bool
     func setLogin(login: String)
     func setPassword(password: String)
     func getPassword()->String
     func getLogin()->String
-    func changeHidePassword(password: String, passwordHide: String)->String
     func getStatusCheckLogin()->Check
     func getStatusCheckPassword()->Check
+    func changeStatusHidePassword()
+    func isHidePassword()-> Bool
+    func getPasswordForShow()->String
 }
 
 //MARK: View -

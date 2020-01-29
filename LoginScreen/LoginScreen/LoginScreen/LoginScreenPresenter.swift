@@ -16,8 +16,6 @@ class LoginScreenPresenter: LoginScreenPresenterProtocol {
     var interactor: LoginScreenInteractorProtocol?
     private let router: LoginScreenWireframeProtocol
     
-    var statusHidePassword: Bool = true
-    
     init(interface: LoginScreenViewProtocol, interactor: LoginScreenInteractorProtocol?, router: LoginScreenWireframeProtocol) {
         self.view = interface
         self.interactor = interactor
@@ -30,17 +28,25 @@ class LoginScreenPresenter: LoginScreenPresenterProtocol {
     }
     
     func setPassword(password: String) {
-        var passwordNew = password
-        if (isHidePassword()) {
-            let password = interactor?.getPassword() ?? ""
-            passwordNew = interactor?.changeHidePassword(password: password, passwordHide: passwordNew) ?? ""
-        }
-        interactor?.setPassword(password: passwordNew)
+        interactor?.setPassword(password: password)
         updateView()
     }
     
-    func isHidePassword()-> Bool {
-        return statusHidePassword
+    func getPasswordForShow()->String {
+        guard let password = interactor?.getPasswordForShow() else { return "" }
+        return password
+    }
+    
+    func changeStatusHidePassword()->String {
+        guard let interactor = interactor else { return "" }
+        interactor.changeStatusHidePassword()
+        if (interactor.isHidePassword()) {
+            view?.setTittlePasswordButtonShow()
+        }
+        else {
+            view?.setTittlePasswordButtonHide()
+        }
+        return getPasswordForShow()
     }
     
     func updateView() {
@@ -59,27 +65,6 @@ class LoginScreenPresenter: LoginScreenPresenterProtocol {
             return
         }
         view?.switchLoginButton(isHide: false, errorText: "")
-    }
-    
-    func changeHidePassword()->String {
-        statusHidePassword = !statusHidePassword
-        if (isHidePassword()) {
-            view?.setTittlePasswordButtonShow()
-        }
-        else {
-            view?.setTittlePasswordButtonHide()
-        }
-        return getPasswordForShow()
-    }
-    
-    func getPasswordForShow()->String {
-        guard let password = interactor?.getPassword() else { return "" }
-        if (isHidePassword()) {
-            return String(repeating: CharactersChecking.charHidePassword, count: password.count)
-        }
-        else {
-            return password
-        }
     }
     
     func clickLogin() {

@@ -26,8 +26,6 @@ enum Check: Equatable {
 }
 
 class LoginScreenModel {
-    var flagChechLogin: Bool = false
-    var flagChechPassword: Bool = false
     var checkLogin: Check = Check.no("")
     var checkPassword: Check = Check.no("")
     var login: String = ""
