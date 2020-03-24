@@ -19,8 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window = UIWindow(frame:UIScreen.main.bounds)
         
-        let loginScreen = LoginScreenRouter.createModule(title: "Login Screen")
-        let navigationController = UINavigationController(rootViewController: loginScreen)
+        //let loginScreen = LoginScreenRouter.createModule(title: "Login Screen")
+        let signinScreen = SignUpRouter.createModule(title: "Sign up Screen")
+        
+        let navigationController = UINavigationController(rootViewController: signinScreen)
         
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()

@@ -1,13 +1,12 @@
 //
-//  LoginScreenModel.swift
+//  CharactersChecking.swift
 //  LoginScreen
 //
-//  Created by Z on 1/18/20.
+//  Created by Oleksander on 24.03.2020.
 //  Copyright © 2020 Zyma. All rights reserved.
 //
 
 import Foundation
-
 
 struct CharactersChecking {
     
@@ -18,16 +17,4 @@ struct CharactersChecking {
     static let upper_case = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     static let special_characters = "!@#$%^&*()-+"
     static let checkingStrings = [numbers, lower_case, upper_case, special_characters]
-}
-
-enum Check: Equatable {
-    case yes
-    case no (String)
-}
-
-class LoginScreenModel {
-    var checkLogin: Check = Check.no("")
-    var checkPassword: Check = Check.no("")
-    var login: String = ""
-    var password: String = ""
 }
