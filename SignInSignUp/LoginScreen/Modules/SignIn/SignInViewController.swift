@@ -27,6 +27,11 @@ class SignInViewController: UIViewController, SignInViewProtocol {
     var hightCorrectFokusKeyb: CGFloat = 0
     var keyboadHeight: CGFloat = 0
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        passwordTextFild.text = ""
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

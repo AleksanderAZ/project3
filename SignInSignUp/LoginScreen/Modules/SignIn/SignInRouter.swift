@@ -32,7 +32,8 @@ class SignInRouter: SignInWireframeProtocol {
     
     // MARK: - make login
     func login() {
-        print("-----Reasdy------")
+        let view = NamesRouter.createModule()
+        self.viewController?.navigationController?.pushViewController(view, animated: true)
     }
     
     // MARK: - make link

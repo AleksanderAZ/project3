@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NamesViewController" customModule="LoginScreen" customModuleProvider="target">
+            <connections>
+                <outlet property="activityIndicator" destination="yiu-6e-hHX" id="MOD-Xg-NBz"/>
+                <outlet property="namesTable" destination="plf-UK-Hon" id="LFP-Tp-VKl"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BackGround" highlightedImage="BackGround" translatesAutoresizingMaskIntoConstraints="NO" id="x9B-X0-xRQ">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                </imageView>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="plf-UK-Hon">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </tableView>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="yiu-6e-hHX">
+                    <rect key="frame" x="169" y="315" width="37" height="37"/>
+                </activityIndicatorView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="yiu-6e-hHX" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="3Tm-Mo-cLB"/>
+                <constraint firstItem="yiu-6e-hHX" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="59c-tu-FJu"/>
+                <constraint firstItem="plf-UK-Hon" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="A4u-E8-b2d"/>
+                <constraint firstItem="x9B-X0-xRQ" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="GrH-DC-huq"/>
+                <constraint firstItem="x9B-X0-xRQ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Nq7-ni-2gI"/>
+                <constraint firstItem="x9B-X0-xRQ" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Xc5-wv-4t4"/>
+                <constraint firstItem="x9B-X0-xRQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ZAA-3c-eHS"/>
+                <constraint firstAttribute="bottomMargin" secondItem="plf-UK-Hon" secondAttribute="bottom" id="ZjV-Id-Mcc"/>
+                <constraint firstAttribute="trailing" secondItem="plf-UK-Hon" secondAttribute="trailing" id="iun-fN-jPb"/>
+                <constraint firstItem="plf-UK-Hon" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="topMargin" id="ojn-wm-9aP"/>
+                <constraint firstAttribute="bottom" secondItem="x9B-X0-xRQ" secondAttribute="bottom" id="tfx-x8-LtB"/>
+                <constraint firstAttribute="trailing" secondItem="x9B-X0-xRQ" secondAttribute="trailing" id="xc1-0q-ZXO"/>
+            </constraints>
+            <point key="canvasLocation" x="39.200000000000003" y="46.326836581709152"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="BackGround" width="223" height="543"/>
+    </resources>
+</document>

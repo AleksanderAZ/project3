@@ -19,6 +19,16 @@
 		269A1992241D208700228722 /* SignInProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269A198C241D208700228722 /* SignInProtocols.swift */; };
 		269A1993241D208700228722 /* SignInInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269A198D241D208700228722 /* SignInInteractor.swift */; };
 		269A1994241D208700228722 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 269A198E241D208700228722 /* SignInViewController.xib */; };
+		26D0C087242BC73700718C17 /* ApiServise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D0C086242BC73700718C17 /* ApiServise.swift */; };
+		26D0C092242BCBFA00718C17 /* NamesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D0C089242BCBFA00718C17 /* NamesPresenter.swift */; };
+		26D0C093242BCBFA00718C17 /* NamesProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D0C08A242BCBFA00718C17 /* NamesProtocols.swift */; };
+		26D0C094242BCBFA00718C17 /* NamesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D0C08B242BCBFA00718C17 /* NamesRouter.swift */; };
+		26D0C095242BCBFA00718C17 /* NamesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26D0C08C242BCBFA00718C17 /* NamesViewController.xib */; };
+		26D0C096242BCBFA00718C17 /* NamesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D0C08D242BCBFA00718C17 /* NamesViewController.swift */; };
+		26D0C097242BCBFA00718C17 /* NamesCells.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26D0C08F242BCBFA00718C17 /* NamesCells.xib */; };
+		26D0C098242BCBFA00718C17 /* NamesCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D0C090242BCBFA00718C17 /* NamesCells.swift */; };
+		26D0C099242BCBFA00718C17 /* NamesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D0C091242BCBFA00718C17 /* NamesInteractor.swift */; };
+		26D0C09B242BD0C800718C17 /* NamesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D0C09A242BD0C800718C17 /* NamesModel.swift */; };
 		A4326CF823D04DCE00035329 /* SignUpInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4326CF223D04DCE00035329 /* SignUpInteractor.swift */; };
 		A4326CF923D04DCE00035329 /* SignUpPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4326CF323D04DCE00035329 /* SignUpPresenter.swift */; };
 		A4326CFA23D04DCE00035329 /* SignUpProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4326CF423D04DCE00035329 /* SignUpProtocols.swift */; };
@@ -45,6 +55,16 @@
 		269A198C241D208700228722 /* SignInProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInProtocols.swift; sourceTree = "<group>"; };
 		269A198D241D208700228722 /* SignInInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInInteractor.swift; sourceTree = "<group>"; };
 		269A198E241D208700228722 /* SignInViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
+		26D0C086242BC73700718C17 /* ApiServise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiServise.swift; sourceTree = "<group>"; };
+		26D0C089242BCBFA00718C17 /* NamesPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamesPresenter.swift; sourceTree = "<group>"; };
+		26D0C08A242BCBFA00718C17 /* NamesProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamesProtocols.swift; sourceTree = "<group>"; };
+		26D0C08B242BCBFA00718C17 /* NamesRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamesRouter.swift; sourceTree = "<group>"; };
+		26D0C08C242BCBFA00718C17 /* NamesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NamesViewController.xib; sourceTree = "<group>"; };
+		26D0C08D242BCBFA00718C17 /* NamesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamesViewController.swift; sourceTree = "<group>"; };
+		26D0C08F242BCBFA00718C17 /* NamesCells.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NamesCells.xib; sourceTree = "<group>"; };
+		26D0C090242BCBFA00718C17 /* NamesCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamesCells.swift; sourceTree = "<group>"; };
+		26D0C091242BCBFA00718C17 /* NamesInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamesInteractor.swift; sourceTree = "<group>"; };
+		26D0C09A242BD0C800718C17 /* NamesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamesModel.swift; sourceTree = "<group>"; };
 		A4326CF223D04DCE00035329 /* SignUpInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpInteractor.swift; sourceTree = "<group>"; };
 		A4326CF323D04DCE00035329 /* SignUpPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPresenter.swift; sourceTree = "<group>"; };
 		A4326CF423D04DCE00035329 /* SignUpProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpProtocols.swift; sourceTree = "<group>"; };
@@ -90,6 +110,7 @@
 		26BE14DF241D1A2D00B69EFC /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				26D0C088242BCBFA00718C17 /* Names */,
 				26BE14E0241D1A7600B69EFC /* SignIn */,
 				A4326CF123D04D9300035329 /* SignUp */,
 			);
@@ -115,8 +136,32 @@
 				2646D5F1242A774A002AA93E /* SaveServise.swift */,
 				2646D5F3242A7763002AA93E /* ReadServise.swift */,
 				2646D5F5242A7889002AA93E /* UserDefaultServise.swift */,
+				26D0C086242BC73700718C17 /* ApiServise.swift */,
 			);
 			path = Servises;
+			sourceTree = "<group>";
+		};
+		26D0C088242BCBFA00718C17 /* Names */ = {
+			isa = PBXGroup;
+			children = (
+				26D0C089242BCBFA00718C17 /* NamesPresenter.swift */,
+				26D0C08A242BCBFA00718C17 /* NamesProtocols.swift */,
+				26D0C08B242BCBFA00718C17 /* NamesRouter.swift */,
+				26D0C091242BCBFA00718C17 /* NamesInteractor.swift */,
+				26D0C08D242BCBFA00718C17 /* NamesViewController.swift */,
+				26D0C08C242BCBFA00718C17 /* NamesViewController.xib */,
+				26D0C08E242BCBFA00718C17 /* NamesCells */,
+			);
+			path = Names;
+			sourceTree = "<group>";
+		};
+		26D0C08E242BCBFA00718C17 /* NamesCells */ = {
+			isa = PBXGroup;
+			children = (
+				26D0C08F242BCBFA00718C17 /* NamesCells.xib */,
+				26D0C090242BCBFA00718C17 /* NamesCells.swift */,
+			);
+			path = NamesCells;
 			sourceTree = "<group>";
 		};
 		26E81C6B241FFF7F004ADCBD /* PasswordView */ = {
@@ -186,6 +231,7 @@
 				26398131242A53A9009AA483 /* RestorationIdentifierTextField.swift */,
 				26398133242A6313009AA483 /* CharactersChecking.swift */,
 				26398135242A633F009AA483 /* Check.swift */,
+				26D0C09A242BD0C800718C17 /* NamesModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -255,6 +301,8 @@
 				269A1994241D208700228722 /* SignInViewController.xib in Resources */,
 				A43C6B9C23CF189A00C188BB /* LaunchScreen.storyboard in Resources */,
 				A43C6B9923CF189A00C188BB /* Assets.xcassets in Resources */,
+				26D0C097242BCBFA00718C17 /* NamesCells.xib in Resources */,
+				26D0C095242BCBFA00718C17 /* NamesViewController.xib in Resources */,
 				A4326CFD23D04DCE00035329 /* SignUpViewController.xib in Resources */,
 				A43C6B9723CF189600C188BB /* Main.storyboard in Resources */,
 			);
@@ -269,15 +317,22 @@
 			files = (
 				269A1990241D208700228722 /* SignInRouter.swift in Sources */,
 				269A1992241D208700228722 /* SignInProtocols.swift in Sources */,
+				26D0C098242BCBFA00718C17 /* NamesCells.swift in Sources */,
 				26398136242A633F009AA483 /* Check.swift in Sources */,
 				A4326CFB23D04DCE00035329 /* SignUpRouter.swift in Sources */,
 				A4D50AAB23D30310007273BA /* LoginModel.swift in Sources */,
+				26D0C094242BCBFA00718C17 /* NamesRouter.swift in Sources */,
 				26398132242A53A9009AA483 /* RestorationIdentifierTextField.swift in Sources */,
 				26398134242A6313009AA483 /* CharactersChecking.swift in Sources */,
 				A4326CFC23D04DCE00035329 /* SignUpViewController.swift in Sources */,
+				26D0C09B242BD0C800718C17 /* NamesModel.swift in Sources */,
+				26D0C099242BCBFA00718C17 /* NamesInteractor.swift in Sources */,
 				269A1991241D208700228722 /* SignInViewController.swift in Sources */,
+				26D0C096242BCBFA00718C17 /* NamesViewController.swift in Sources */,
 				A4326CFA23D04DCE00035329 /* SignUpProtocols.swift in Sources */,
 				2646D5F6242A7889002AA93E /* UserDefaultServise.swift in Sources */,
+				26D0C087242BC73700718C17 /* ApiServise.swift in Sources */,
+				26D0C093242BCBFA00718C17 /* NamesProtocols.swift in Sources */,
 				A4326CF823D04DCE00035329 /* SignUpInteractor.swift in Sources */,
 				A4326CF923D04DCE00035329 /* SignUpPresenter.swift in Sources */,
 				2646D5F4242A7763002AA93E /* ReadServise.swift in Sources */,
@@ -285,6 +340,7 @@
 				269A198F241D208700228722 /* SignInPresenter.swift in Sources */,
 				269A1993241D208700228722 /* SignInInteractor.swift in Sources */,
 				A43C6B9223CF189600C188BB /* AppDelegate.swift in Sources */,
+				26D0C092242BCBFA00718C17 /* NamesPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

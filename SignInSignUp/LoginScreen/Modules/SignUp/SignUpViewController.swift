@@ -36,6 +36,12 @@ class SignUpViewController: UIViewController, SignUpViewProtocol {
         configNavigation()
         configLinkLabel()
         configTextFild()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        passwordTextFild.text = ""
     }
     
     func configTextFild() {
