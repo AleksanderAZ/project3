@@ -26,7 +26,7 @@ class NamesViewController: UIViewController, NamesViewProtocol {
         super.viewDidLoad()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sign out", style: .plain, target: self, action: #selector(clickSignOutButtonBar))
-        
+       
         namesTable.delegate = self
         namesTable.dataSource = self
        
@@ -51,28 +51,37 @@ class NamesViewController: UIViewController, NamesViewProtocol {
 
 extension NamesViewController:  UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count = presenter?.countCell() ?? 0
+        let count = presenter?.countCell(section: section) ?? 0
         return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
         if let cell = cell as? NamesCells {
-            cell.name.text = self.presenter?.getName(index: indexPath.row)
+            cell.name.text = self.presenter?.getName(section: indexPath.section, index: indexPath.row)
         }
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let name = presenter?.getNameModel(index: indexPath.row) else { return }
-        print(name)
+        guard let name = presenter?.getName(section: indexPath.section, index: indexPath.row) else { return }
+        self.presenter?.addName(name: name)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "🗑", handler: { [weak self] (action, view, handler) in
+            self?.presenter?.deleteName(section: indexPath.section, index: indexPath.row)
+        })
+        let config = UISwipeActionsConfiguration(actions: [deleteAction])
+        return config
     }
 }

@@ -37,7 +37,7 @@ class SignUpRouter: SignUpWireframeProtocol {
     
     // MARK: - make link
     func openLink() {
-        let view = SignInRouter.createModule(title: "Sign in Screen")
+        let view = SignInRouter.createModule(title: "Sign in")
         self.viewController?.navigationController?.pushViewController(view, animated: true)
         print("link sign up")
     }

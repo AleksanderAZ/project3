@@ -28,7 +28,12 @@ class SignInInteractor: SignInInteractorProtocol {
     
     func setLogin(login: String) {
         signInModel.login = login
-        signInModel.checkLogin = checkLogin(login: signInModel.login)
+        if login == "" {
+            setPassword(password: "")
+        }
+        else {
+            signInModel.checkLogin = checkLogin(login: signInModel.login)
+        }
     }
     
     func getLogin()->String {

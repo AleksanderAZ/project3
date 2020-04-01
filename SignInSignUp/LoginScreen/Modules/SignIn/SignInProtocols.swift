@@ -23,6 +23,7 @@ protocol SignInPresenterProtocol: class {
     func getPasswordForShow()->String
     func clickLogin()
     func openLink()
+    func clearUser()
 }
 
 //MARK: Interactor -

@@ -48,7 +48,7 @@ class ApiServise: NSObject {
     func loadAPIRequest<T: Codable>(url: String, completion: @escaping (T?, String?)->()) {
         let parameters = [String: String]()
         
-        self.request("GET", url, parameters) { [weak self] (result: T?, error) in
+        self.request("GET", url, parameters) { (result: T?, error) in
             guard let result = result else {
                 completion(nil, error)
                 return

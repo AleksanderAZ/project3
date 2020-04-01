@@ -29,7 +29,7 @@ class SignInViewController: UIViewController, SignInViewProtocol {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        passwordTextFild.text = ""
+        self.presenter?.clearUser()
     }
     
     override func viewDidLoad() {

@@ -15,7 +15,7 @@ class NamesPresenter: NamesPresenterProtocol {
     weak private var view: NamesViewProtocol?
     var interactor: NamesInteractorProtocol?
     private let router: NamesWireframeProtocol
-    var resultName: [NamesModel]?
+    
     
     init(interface: NamesViewProtocol, interactor: NamesInteractorProtocol?, router: NamesWireframeProtocol) {
         self.view = interface
@@ -27,29 +27,33 @@ class NamesPresenter: NamesPresenterProtocol {
         self.interactor?.requestName()
     }
     
-    func countCell()->Int {
-        return resultName?.count ?? 0
+    func countCell(section: Int)->Int {
+        return interactor?.namesCount(section: section) ?? 0
     }
 
-    func closeView() {
-        router.closeView()
+    func getName(section: Int, index: Int)->String {
+        return interactor?.getName(section: section, index: index) ?? ""
     }
     
-    func updateName(resultName: [NamesModel]?) {
-        self.resultName = resultName
-        self.view?.update()
-    }
-
-    func getName(index: Int)->String {
-        let name = resultName?[index].name ?? ""
-        return name
+    func deleteName(section: Int, index: Int) {
+        self.interactor?.deleteName(section: section, index: index)
+        updateName()
     }
     
-    func getNameModel(index: Int)->NamesModel? {
-        return resultName?[index]
+    func addName(name: String) {
+        self.interactor?.addName(name: name)
+        updateName()
     }
     
     func signOut() {
         self.router.closeView()
+    }
+    
+    func closeView() {
+        router.closeView()
+    }
+    
+    func updateName() {
+        self.view?.update()
     }
 }

@@ -14,18 +14,56 @@ class NamesInteractor: NamesInteractorProtocol {
 
     weak var presenter: NamesPresenterProtocol?
     
+    var resultNames = NamesModel()
+    var manualNames = NamesModel()
+    
     func requestName() {
-        var resultName = [NamesModel]()
-       
         ApiServise.shared.loadAPIRequest(url: "http://names.drycodes.com/10") { [weak self] (result: [String]?, error) in
             guard let self = self else { return }
             guard let result = result else { print(error as Any); return }
             guard let presenter = self.presenter else { return }
+            self.resultNames.clearNames()
             for item in  result {
-                let namesModel = NamesModel(name: item)
-                resultName.append(namesModel)
+                let namesModel = NameModel(name: item)
+                self.resultNames.addName(name: namesModel)
             }
-            presenter.updateName(resultName: resultName)
+            for i in  0...3 {
+                let namesModel = NameModel(name: "test " + String(i))
+                self.manualNames.addName(name: namesModel)
+            }
+            presenter.updateName()
         }
+    }
+    
+    func namesCount(section: Int)->Int {
+        switch section {
+        case 0:
+            return self.resultNames.count()
+        default:
+            return self.manualNames.count()
+        }
+    }
+    
+    func getName(section: Int, index: Int)->String {
+        switch section {
+        case 0:
+            return self.resultNames.getName(index: index)
+        default:
+            return self.manualNames.getName(index: index)
+        }
+    }
+    
+    func deleteName(section: Int, index: Int) {
+        switch section {
+        case 0:
+            self.resultNames.removName(index: index)
+        default:
+            self.manualNames.removName(index: index)
+        }
+    }
+    
+    func addName(name: String) {
+        let namesModel = NameModel(name: name)
+        self.manualNames.addName(name: namesModel)
     }
 }

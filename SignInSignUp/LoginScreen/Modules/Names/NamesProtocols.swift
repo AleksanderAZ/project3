@@ -16,13 +16,14 @@ protocol NamesWireframeProtocol: class {
 }
 //MARK: Presenter -
 protocol NamesPresenterProtocol: class {
-    func countCell()->Int
-    func updateName(resultName: [NamesModel]?)
-    func getName(index: Int)->String
+    func countCell(section: Int)->Int
+    func updateName()
+    func getName(section: Int, index: Int)->String
     func closeView()
-    func getNameModel(index: Int)->NamesModel?
     func requestName()
     func signOut()
+    func deleteName(section: Int, index: Int)
+    func addName(name: String)
 }
 
 //MARK: Interactor -
@@ -30,6 +31,10 @@ protocol NamesInteractorProtocol: class {
     var presenter: NamesPresenterProtocol?  { get set }
     
     func requestName()
+    func deleteName(section: Int, index: Int)
+    func namesCount(section: Int)->Int
+    func getName(section: Int, index: Int)->String
+    func addName(name: String)
 }
 
 //MARK: View -

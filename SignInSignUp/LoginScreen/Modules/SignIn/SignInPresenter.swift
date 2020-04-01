@@ -80,4 +80,10 @@ class SignInPresenter: SignInPresenterProtocol {
     func openLink() {
         router.openLink()
     }
+    
+    func clearUser() {
+        setLogin(login: "")
+        setPassword(password: "")
+        updateView()
+    }
 }

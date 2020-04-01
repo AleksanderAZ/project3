@@ -28,7 +28,8 @@
 		26D0C097242BCBFA00718C17 /* NamesCells.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26D0C08F242BCBFA00718C17 /* NamesCells.xib */; };
 		26D0C098242BCBFA00718C17 /* NamesCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D0C090242BCBFA00718C17 /* NamesCells.swift */; };
 		26D0C099242BCBFA00718C17 /* NamesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D0C091242BCBFA00718C17 /* NamesInteractor.swift */; };
-		26D0C09B242BD0C800718C17 /* NamesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D0C09A242BD0C800718C17 /* NamesModel.swift */; };
+		26D0C09B242BD0C800718C17 /* NameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D0C09A242BD0C800718C17 /* NameModel.swift */; };
+		26F3D0022435059600216704 /* NamesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F3D0012435059600216704 /* NamesModel.swift */; };
 		A4326CF823D04DCE00035329 /* SignUpInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4326CF223D04DCE00035329 /* SignUpInteractor.swift */; };
 		A4326CF923D04DCE00035329 /* SignUpPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4326CF323D04DCE00035329 /* SignUpPresenter.swift */; };
 		A4326CFA23D04DCE00035329 /* SignUpProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4326CF423D04DCE00035329 /* SignUpProtocols.swift */; };
@@ -64,7 +65,8 @@
 		26D0C08F242BCBFA00718C17 /* NamesCells.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NamesCells.xib; sourceTree = "<group>"; };
 		26D0C090242BCBFA00718C17 /* NamesCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamesCells.swift; sourceTree = "<group>"; };
 		26D0C091242BCBFA00718C17 /* NamesInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamesInteractor.swift; sourceTree = "<group>"; };
-		26D0C09A242BD0C800718C17 /* NamesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamesModel.swift; sourceTree = "<group>"; };
+		26D0C09A242BD0C800718C17 /* NameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameModel.swift; sourceTree = "<group>"; };
+		26F3D0012435059600216704 /* NamesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamesModel.swift; sourceTree = "<group>"; };
 		A4326CF223D04DCE00035329 /* SignUpInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpInteractor.swift; sourceTree = "<group>"; };
 		A4326CF323D04DCE00035329 /* SignUpPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPresenter.swift; sourceTree = "<group>"; };
 		A4326CF423D04DCE00035329 /* SignUpProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpProtocols.swift; sourceTree = "<group>"; };
@@ -231,7 +233,8 @@
 				26398131242A53A9009AA483 /* RestorationIdentifierTextField.swift */,
 				26398133242A6313009AA483 /* CharactersChecking.swift */,
 				26398135242A633F009AA483 /* Check.swift */,
-				26D0C09A242BD0C800718C17 /* NamesModel.swift */,
+				26D0C09A242BD0C800718C17 /* NameModel.swift */,
+				26F3D0012435059600216704 /* NamesModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -325,7 +328,8 @@
 				26398132242A53A9009AA483 /* RestorationIdentifierTextField.swift in Sources */,
 				26398134242A6313009AA483 /* CharactersChecking.swift in Sources */,
 				A4326CFC23D04DCE00035329 /* SignUpViewController.swift in Sources */,
-				26D0C09B242BD0C800718C17 /* NamesModel.swift in Sources */,
+				26D0C09B242BD0C800718C17 /* NameModel.swift in Sources */,
+				26F3D0022435059600216704 /* NamesModel.swift in Sources */,
 				26D0C099242BCBFA00718C17 /* NamesInteractor.swift in Sources */,
 				269A1991241D208700228722 /* SignInViewController.swift in Sources */,
 				26D0C096242BCBFA00718C17 /* NamesViewController.swift in Sources */,
