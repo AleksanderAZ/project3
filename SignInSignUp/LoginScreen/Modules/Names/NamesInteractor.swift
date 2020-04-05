@@ -27,10 +27,6 @@ class NamesInteractor: NamesInteractorProtocol {
                 let namesModel = NameModel(name: item)
                 self.resultNames.addName(name: namesModel)
             }
-            for i in  0...3 {
-                let namesModel = NameModel(name: "test " + String(i))
-                self.manualNames.addName(name: namesModel)
-            }
             presenter.updateName()
         }
     }

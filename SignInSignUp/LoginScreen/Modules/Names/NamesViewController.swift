@@ -25,7 +25,9 @@ class NamesViewController: UIViewController, NamesViewProtocol {
 	override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sign out", style: .plain, target: self, action: #selector(clickSignOutButtonBar))
+        let signoutButton = UIBarButtonItem(title: "Sign out.", style: .plain, target: self, action: #selector(clickSignOutButtonBar))
+        let addNameButton = UIBarButtonItem(title: "Add line.", style: .done, target: self, action: #selector(clickAddButtonBar))
+        self.navigationItem.rightBarButtonItems = [signoutButton, addNameButton]
        
         namesTable.delegate = self
         namesTable.dataSource = self
@@ -39,6 +41,10 @@ class NamesViewController: UIViewController, NamesViewProtocol {
     
     @objc func clickSignOutButtonBar() {
         presenter?.signOut()
+    }
+    
+    @objc func clickAddButtonBar() {
+        self.presenter?.addName(name: "New line" + String((self.presenter?.countCell(section: 1) ?? 0) + 1))
     }
     
     func update() {
@@ -83,5 +89,12 @@ extension NamesViewController:  UITableViewDataSource, UITableViewDelegate {
         })
         let config = UISwipeActionsConfiguration(actions: [deleteAction])
         return config
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if (section == 0) {
+            return "Api Name"
+        }
+        return "Manual Name"
     }
 }

@@ -107,9 +107,6 @@ class SignInInteractor: SignInInteractorProtocol {
             loginChar.removeLast(loginChar.count-index!)
             index = loginChar.lastIndex(of: ".")
         }
-        
-        
-        
         return Check.yes
     }
     

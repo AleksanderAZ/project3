@@ -30,6 +30,8 @@ class SignInViewController: UIViewController, SignInViewProtocol {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.presenter?.clearUser()
+        configLinkLabel()
+        configTextFild()
     }
     
     override func viewDidLoad() {
@@ -48,6 +50,8 @@ class SignInViewController: UIViewController, SignInViewProtocol {
         buttonLoadView.isHidden = true
         passwordView.isHidden = true
         errorTextLabel.text = ""
+        passwordTextFild.text = ""
+        loginTextFild.text = ""
         errorTextLabel.isHidden = true
         registerForKeyboardNotifications()
         passwordTextFild.delegate = self
